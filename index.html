@@ -10,9 +10,11 @@
             overflow: hidden;
             background-color: #87CEEB;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            position: relative; /* Para posicionar o botão de pulo */
         }
         canvas {
             display: block;
@@ -28,10 +30,23 @@
             font-size: 16px;
             cursor: pointer;
         }
+        #jumpBtn {
+            position: absolute;
+            bottom: 20px; /* Posição do botão de pulo */
+            right: 20px; /* Lado direito */
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #FFA500; /* Cor do botão */
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <button id="startBtn">Iniciar Jogo</button>
+    <button id="jumpBtn" style="display: none;">Pular</button>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     
     <script>
@@ -44,6 +59,7 @@
         let gameTime = 0;
 
         document.getElementById('startBtn').onclick = startGame;
+        document.getElementById('jumpBtn').onclick = jump; // Adicionando evento de clique para o botão de pulo
         document.addEventListener('keydown', control);
 
         function startGame() {
@@ -52,6 +68,7 @@
             trash = [];
             gameTime = 0;
             document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('jumpBtn').style.display = 'block'; // Mostrar botão de pulo
             gameInterval = setInterval(updateGame, 20);
             setInterval(() => gameTime++, 1000);
             spawnTrash();
@@ -59,9 +76,8 @@
 
         function spawnTrash() {
             setInterval(() => {
-                // Reduzindo a quantidade de lixo que aparece
-                if (trash.length < 3) { // Limitar a quantidade de lixo na tela
-                    const trashItem = { x: canvas.width, y: 300, width: 30, height: 30 }; // Lixo na frente do tigre
+                if (trash.length < 3) {
+                    const trashItem = { x: canvas.width, y: 300, width: 30, height: 30 };
                     trash.push(trashItem);
                 }
             }, 2000);
@@ -77,12 +93,13 @@
         }
 
         function jump() {
-            tiger.isJumping = true;
-            tiger.jumpVelocity = -25; // Aumentando a velocidade inicial do pulo
+            if (!tiger.isJumping) {
+                tiger.isJumping = true;
+                tiger.jumpVelocity = -25;
+            }
         }
 
         function attack() {
-            // Implementar lógica de ataque
             console.log("Ataque!");
         }
 
@@ -98,9 +115,8 @@
         function updateTiger() {
             if (tiger.isJumping) {
                 tiger.y += tiger.jumpVelocity;
-                tiger.jumpVelocity += tiger.gravity; // Aplicar gravidade
+                tiger.jumpVelocity += tiger.gravity;
 
-                // Se o tigre atingir o chão
                 if (tiger.y >= 300) {
                     tiger.y = 300;
                     tiger.isJumping = false;
@@ -122,14 +138,12 @@
 
         function updateTrashPosition() {
             for (let i = 0; i < trash.length; i++) {
-                trash[i].x -= 4; // Aumentando a velocidade do lixo
-                // Verifica colisão com o lixo
+                trash[i].x -= 4;
                 if (trash[i].x < tiger.x + tiger.width && trash[i].x + trash[i].width > tiger.x && trash[i].y + trash[i].height >= tiger.y) {
-                    // Colisão só se o tigre não estiver pulando
                     if (!tiger.isJumping) {
                         trash.splice(i, 1);
                         i--;
-                        tiger.hp--; // Perde uma vida ao colidir
+                        tiger.hp--;
                         if (tiger.hp <= 0) {
                             endGame();
                         }
@@ -153,6 +167,7 @@
             clearInterval(gameInterval);
             alert("Game Over! Você perdeu todas as vidas.");
             document.getElementById('startBtn').style.display = 'block';
+            document.getElementById('jumpBtn').style.display = 'none'; // Esconder botão de pulo ao final do jogo
         }
     </script>
 </body>
