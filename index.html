@@ -34,7 +34,7 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 100, points: 0, isJumping: false, jumpHeight: 0 };
+        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 2 };
         let trash = [];
         let gameInterval;
         let gameTime = 0;
@@ -43,25 +43,25 @@
         document.addEventListener('keydown', control);
 
         function startGame() {
-            tiger.hp = 100;
+            tiger.hp = 3;
             tiger.points = 0;
             trash = [];
             gameTime = 0;
             document.getElementById('startBtn').style.display = 'none';
-            gameInterval = setInterval(updateGame, 100);
+            gameInterval = setInterval(updateGame, 20);
             setInterval(() => gameTime++, 1000);
             spawnTrash();
         }
 
         function spawnTrash() {
             setInterval(() => {
-                const trashItem = { x: canvas.width, y: 350, width: 30, height: 30 };
+                const trashItem = { x: canvas.width, y: 300, width: 30, height: 30 }; // Lixo na frente do tigre
                 trash.push(trashItem);
             }, 2000);
         }
 
         function control(event) {
-            if (event.key === ' ') {
+            if (event.key === ' ' && !tiger.isJumping) {
                 jump();
             }
             if (event.key === 'a') {
@@ -70,14 +70,8 @@
         }
 
         function jump() {
-            if (!tiger.isJumping) {
-                tiger.isJumping = true;
-                tiger.jumpHeight = 100;
-                setTimeout(() => {
-                    tiger.isJumping = false;
-                    tiger.jumpHeight = 0;
-                }, 500);
-            }
+            tiger.isJumping = true;
+            tiger.jumpVelocity = -15; // Velocidade inicial do pulo
         }
 
         function attack() {
@@ -87,15 +81,29 @@
 
         function updateGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            updateTiger();
             drawTiger();
             drawTrash();
             updateTrashPosition();
             drawStats();
         }
 
+        function updateTiger() {
+            if (tiger.isJumping) {
+                tiger.y += tiger.jumpVelocity;
+                tiger.jumpVelocity += tiger.gravity; // Aplicar gravidade
+
+                // Se o tigre atingir o chão
+                if (tiger.y >= 300) {
+                    tiger.y = 300;
+                    tiger.isJumping = false;
+                }
+            }
+        }
+
         function drawTiger() {
             ctx.fillStyle = 'orange';
-            ctx.fillRect(tiger.x, tiger.y - tiger.jumpHeight, tiger.width, tiger.height);
+            ctx.fillRect(tiger.x, tiger.y, tiger.width, tiger.height);
         }
 
         function drawTrash() {
@@ -108,10 +116,17 @@
         function updateTrashPosition() {
             for (let i = 0; i < trash.length; i++) {
                 trash[i].x -= 5;
-                if (trash[i].x < 0) {
+                // Verifica colisão com o lixo
+                if (trash[i].x < tiger.x + tiger.width && trash[i].x + trash[i].width > tiger.x && trash[i].y + trash[i].height >= tiger.y) {
                     trash.splice(i, 1);
                     i--;
-                    tiger.hp -= 10; // Perde HP ao não evitar lixo
+                    tiger.hp--; // Perde uma vida ao colidir
+                    if (tiger.hp <= 0) {
+                        endGame();
+                    }
+                } else if (trash[i].x < 0) {
+                    trash.splice(i, 1);
+                    i--;
                 }
             }
         }
@@ -119,9 +134,15 @@
         function drawStats() {
             ctx.fillStyle = 'black';
             ctx.font = '20px Arial';
-            ctx.fillText(`HP: ${tiger.hp}`, 10, 20);
+            ctx.fillText(`Vidas: ${tiger.hp}`, 10, 20);
             ctx.fillText(`Pontos: ${tiger.points}`, 10, 40);
             ctx.fillText(`Tempo: ${gameTime}`, 10, 60);
+        }
+
+        function endGame() {
+            clearInterval(gameInterval);
+            alert("Game Over! Você perdeu todas as vidas.");
+            document.getElementById('startBtn').style.display = 'block';
         }
     </script>
 </body>
