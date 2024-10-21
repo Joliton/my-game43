@@ -66,6 +66,14 @@
         document.getElementById('jumpBtn').onclick = jump; // Adicionando evento de clique para o botão de pulo
         document.addEventListener('keydown', control);
 
+        // Eventos de toque
+        canvas.addEventListener('touchstart', function(event) {
+            event.preventDefault(); // Evita o comportamento padrão
+            if (tiger.hp > 0) {
+                jump();
+            }
+        });
+
         function startGame() {
             tiger.hp = 3;
             tiger.points = 0;
