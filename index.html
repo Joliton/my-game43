@@ -34,7 +34,7 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 2 };
+        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
         let trash = [];
         let gameInterval;
         let gameTime = 0;
@@ -71,7 +71,7 @@
 
         function jump() {
             tiger.isJumping = true;
-            tiger.jumpVelocity = -15; // Velocidade inicial do pulo
+            tiger.jumpVelocity = -25; // Aumentando a velocidade inicial do pulo
         }
 
         function attack() {
@@ -115,14 +115,17 @@
 
         function updateTrashPosition() {
             for (let i = 0; i < trash.length; i++) {
-                trash[i].x -= 5;
+                trash[i].x -= 3; // Reduzindo a velocidade do lixo
                 // Verifica colisão com o lixo
                 if (trash[i].x < tiger.x + tiger.width && trash[i].x + trash[i].width > tiger.x && trash[i].y + trash[i].height >= tiger.y) {
-                    trash.splice(i, 1);
-                    i--;
-                    tiger.hp--; // Perde uma vida ao colidir
-                    if (tiger.hp <= 0) {
-                        endGame();
+                    // Colisão só se o tigre não estiver pulando
+                    if (!tiger.isJumping) {
+                        trash.splice(i, 1);
+                        i--;
+                        tiger.hp--; // Perde uma vida ao colidir
+                        if (tiger.hp <= 0) {
+                            endGame();
+                        }
                     }
                 } else if (trash[i].x < 0) {
                     trash.splice(i, 1);
