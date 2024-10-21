@@ -20,8 +20,6 @@
             display: block;
             background-color: #fff;
             border: 2px solid #000;
-            width: 100%; /* Ocupa 100% da largura */
-            height: auto; /* Altura automática para manter proporção */
         }
         #startBtn {
             position: absolute;
@@ -49,36 +47,11 @@
 <body>
     <button id="startBtn">Iniciar Jogo</button>
     <button id="jumpBtn" style="display: none;">Pular</button>
-    <canvas id="gameCanvas"></canvas>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
     
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-
-        // Definindo a proporção do jogo
-        const GAME_WIDTH = 800;
-        const GAME_HEIGHT = 400;
-
-        // Ajusta o tamanho do canvas com base na tela
-        function resizeCanvas() {
-            const aspectRatio = GAME_WIDTH / GAME_HEIGHT;
-            const newWidth = window.innerWidth;
-            const newHeight = newWidth / aspectRatio;
-            
-            // Se a nova altura exceder a altura da janela, ajusta a largura
-            if (newHeight > window.innerHeight) {
-                const adjustedHeight = window.innerHeight;
-                const adjustedWidth = adjustedHeight * aspectRatio;
-                canvas.width = adjustedWidth;
-                canvas.height = adjustedHeight;
-            } else {
-                canvas.width = newWidth;
-                canvas.height = newHeight;
-            }
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas(); // Inicializa o tamanho do canvas
 
         let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
         let trash = [];
