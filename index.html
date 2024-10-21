@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Tigre</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #87CEEB;
+        }
+        canvas {
+            display: block;
+            margin: auto;
+            background-color: #fff;
+            border: 2px solid #000;
+        }
+        #startBtn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="startBtn">Iniciar Jogo</button>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 100, points: 0, isJumping: false, jumpHeight: 0 };
+        let trash = [];
+        let gameInterval;
+        let gameTime = 0;
+
+        document.getElementById('startBtn').onclick = startGame;
+        document.addEventListener('keydown', control);
+
+        function startGame() {
+            tiger.hp = 100;
+            tiger.points = 0;
+            trash = [];
+            gameTime = 0;
+            document.getElementById('startBtn').style.display = 'none';
+            gameInterval = setInterval(updateGame, 100);
+            setInterval(() => gameTime++, 1000);
+            spawnTrash();
+        }
+
+        function spawnTrash() {
+            setInterval(() => {
+                const trashItem = { x: canvas.width, y: 350, width: 30, height: 30 };
+                trash.push(trashItem);
+            }, 2000);
+        }
+
+        function control(event) {
+            if (event.key === ' ') {
+                jump();
+            }
+            if (event.key === 'a') {
+                attack();
+            }
+        }
+
+        function jump() {
+            if (!tiger.isJumping) {
+                tiger.isJumping = true;
+                tiger.jumpHeight = 100;
+                setTimeout(() => {
+                    tiger.isJumping = false;
+                    tiger.jumpHeight = 0;
+                }, 500);
+            }
+        }
+
+        function attack() {
+            // Implementar lógica de ataque
+            console.log("Ataque!");
+        }
+
+        function updateGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawTiger();
+            drawTrash();
+            updateTrashPosition();
+            drawStats();
+        }
+
+        function drawTiger() {
+            ctx.fillStyle = 'orange';
+            ctx.fillRect(tiger.x, tiger.y - tiger.jumpHeight, tiger.width, tiger.height);
+        }
+
+        function drawTrash() {
+            ctx.fillStyle = 'brown';
+            trash.forEach(item => {
+                ctx.fillRect(item.x, item.y, item.width, item.height);
+            });
+        }
+
+        function updateTrashPosition() {
+            for (let i = 0; i < trash.length; i++) {
+                trash[i].x -= 5;
+                if (trash[i].x < 0) {
+                    trash.splice(i, 1);
+                    i--;
+                    tiger.hp -= 10; // Perde HP ao não evitar lixo
+                }
+            }
+        }
+
+        function drawStats() {
+            ctx.fillStyle = 'black';
+            ctx.font = '20px Arial';
+            ctx.fillText(`HP: ${tiger.hp}`, 10, 20);
+            ctx.fillText(`Pontos: ${tiger.points}`, 10, 40);
+            ctx.fillText(`Tempo: ${gameTime}`, 10, 60);
+        }
+    </script>
+</body>
+</html>
