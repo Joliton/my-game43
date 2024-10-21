@@ -20,10 +20,11 @@
             display: block;
             background-color: #fff;
             border: 2px solid #000;
+            position: relative; /* Para permitir a sobreposição do botão */
         }
         #startBtn {
             position: absolute;
-            top: 50px; /* Mais perto do jogo */
+            top: 150px; /* Ajuste a posição para ficar em cima do jogo */
             left: 50%;
             transform: translateX(-50%);
             padding: 25px 50px; /* Aumentando o tamanho do botão */
@@ -34,6 +35,7 @@
             border-radius: 10px; /* Aumentando a borda */
             color: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para efeito de profundidade */
+            z-index: 10; /* Para garantir que o botão fique em cima do canvas */
         }
         #jumpBtn {
             position: absolute;
