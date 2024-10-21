@@ -14,13 +14,13 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            position: relative; /* Para posicionar o botão de pulo */
+            position: relative; /* Para posicionar os botões */
         }
         canvas {
             display: block;
             background-color: #fff;
             border: 2px solid #000;
-            position: relative; /* Para permitir a sobreposição do botão */
+            position: relative; /* Para permitir a sobreposição dos botões */
         }
         #startBtn {
             position: absolute;
@@ -37,10 +37,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para efeito de profundidade */
             z-index: 10; /* Para garantir que o botão fique em cima do canvas */
         }
-        #jumpBtn {
+        #jumpBtn, #attackBtn {
             position: absolute;
-            bottom: 20px; /* Posição do botão de pulo */
-            right: 20px; /* Lado direito */
+            bottom: 20px; /* Posição dos botões de pulo e ataque */
             padding: 10px;
             font-size: 14px;
             cursor: pointer;
@@ -49,11 +48,18 @@
             border-radius: 5px;
             color: white;
         }
+        #jumpBtn {
+            left: 20px; /* Posição do botão de pulo */
+        }
+        #attackBtn {
+            right: 20px; /* Posição do botão de ataque */
+        }
     </style>
 </head>
 <body>
     <button id="startBtn">Iniciar Jogo</button>
-    <button id="jumpBtn" style="display: none;">Pular</button>
+    <button id="jumpBtn" style="display: block;">Pular</button>
+    <button id="attackBtn" style="display: block;">Atacar</button>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     
     <script>
@@ -67,6 +73,7 @@
 
         document.getElementById('startBtn').onclick = startGame;
         document.getElementById('jumpBtn').onclick = jump; // Adicionando evento de clique para o botão de pulo
+        document.getElementById('attackBtn').onclick = attack; // Adicionando evento de clique para o botão de ataque
         document.addEventListener('keydown', control);
 
         // Eventos de toque
@@ -83,7 +90,6 @@
             trash = [];
             gameTime = 0;
             document.getElementById('startBtn').style.display = 'none';
-            document.getElementById('jumpBtn').style.display = 'block'; // Mostrar botão de pulo
             gameInterval = setInterval(updateGame, 20);
             setInterval(() => gameTime++, 1000);
             spawnTrash();
@@ -115,7 +121,14 @@
         }
 
         function attack() {
-            console.log("Ataque!");
+            // Verifica se algum lixo está próximo para ser atacado
+            for (let i = trash.length - 1; i >= 0; i--) {
+                if (trash[i].x < tiger.x + tiger.width && trash[i].x + trash[i].width > tiger.x && trash[i].y + trash[i].height >= tiger.y) {
+                    trash.splice(i, 1); // Remove o lixo se atacado
+                    tiger.points += 10; // Adiciona pontos ao atacar
+                    break; // Para de verificar após o primeiro ataque
+                }
+            }
         }
 
         function updateGame() {
@@ -182,9 +195,8 @@
             clearInterval(gameInterval);
             alert("Game Over! Você perdeu todas as vidas.");
             document.getElementById('startBtn').style.display = 'block';
-            document.getElementById('jumpBtn').style.display = 'none'; // Esconder botão de pulo ao final do jogo
+            // Os botões de pulo e ataque continuam visíveis
         }
     </script>
 </body>
 </html>
-
