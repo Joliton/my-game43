@@ -9,17 +9,21 @@
             margin: 0;
             overflow: hidden;
             background-color: #87CEEB;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         canvas {
             display: block;
-            margin: auto;
             background-color: #fff;
             border: 2px solid #000;
         }
         #startBtn {
             position: absolute;
             top: 20px;
-            left: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
@@ -55,8 +59,11 @@
 
         function spawnTrash() {
             setInterval(() => {
-                const trashItem = { x: canvas.width, y: 300, width: 30, height: 30 }; // Lixo na frente do tigre
-                trash.push(trashItem);
+                // Reduzindo a quantidade de lixo que aparece
+                if (trash.length < 3) { // Limitar a quantidade de lixo na tela
+                    const trashItem = { x: canvas.width, y: 300, width: 30, height: 30 }; // Lixo na frente do tigre
+                    trash.push(trashItem);
+                }
             }, 2000);
         }
 
@@ -115,7 +122,7 @@
 
         function updateTrashPosition() {
             for (let i = 0; i < trash.length; i++) {
-                trash[i].x -= 3; // Reduzindo a velocidade do lixo
+                trash[i].x -= 4; // Aumentando a velocidade do lixo
                 // Verifica colisão com o lixo
                 if (trash[i].x < tiger.x + tiger.width && trash[i].x + trash[i].width > tiger.x && trash[i].y + trash[i].height >= tiger.y) {
                     // Colisão só se o tigre não estiver pulando
