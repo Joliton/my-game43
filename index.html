@@ -65,6 +65,12 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
+        const backgroundImage = new Image();
+        backgroundImage.src = 'https://projetocolabora.com.br/wp-content/uploads/2018/12/058_2150502-scaled.jpg';
+
+        const trashImage = new Image();
+        trashImage.src = 'https://www.pinclipart.com/picdir/big/559-5599148_about-desenho-de-lata-lixo-clipart.png';
+
         let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
         let trash = [];
         let gameInterval;
@@ -140,6 +146,7 @@
 
         function updateGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height); // Desenha o fundo
             updateTiger();
             drawTiger();
             drawTrash();
@@ -165,9 +172,8 @@
         }
 
         function drawTrash() {
-            ctx.fillStyle = 'brown';
             trash.forEach(item => {
-                ctx.fillRect(item.x, item.y, item.width, item.height);
+                ctx.drawImage(trashImage, item.x, item.y, 60, 60); // Aumentando para 60x60 pixels
             });
         }
 
@@ -191,7 +197,7 @@
         }
 
         function drawStats() {
-            ctx.fillStyle = 'black';
+            ctx.fillStyle = 'red'; // Alterando a cor para vermelho
             ctx.font = '20px Arial';
             ctx.fillText(`Vidas: ${tiger.hp}`, 10, 20);
             ctx.fillText(`Pontos: ${tiger.points}`, 10, 40);
