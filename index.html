@@ -81,6 +81,14 @@
         document.getElementById('restartBtn').onclick = restartGame;
         document.getElementById('jumpBtn').onclick = jump;
         document.getElementById('attackBtn').onclick = attack;
+
+        // Adicionando eventos touch
+        document.getElementById('jumpBtn').ontouchstart = jump;
+        document.getElementById('attackBtn').ontouchstart = attack;
+
+        // Adicionando evento de clique no body para pular
+        document.body.onclick = jump;
+
         document.addEventListener('keydown', control);
 
         function startGame() {
@@ -99,7 +107,7 @@
         }
 
         function initGame() {
-            tiger.hp = 10; // Aumentar a quantidade de vidas para 10
+            tiger.hp = 10;
             tiger.points = 0;
             trash = [];
             gameTime = 0;
@@ -112,7 +120,7 @@
 
         function spawnTrash() {
             setInterval(() => {
-                if (trash.length < 2) { // Reduzir a quantidade de inimigos
+                if (trash.length < 2) {
                     const trashItem = { x: canvas.width, y: 300, width: 30, height: 30 };
                     trash.push(trashItem);
                 }
