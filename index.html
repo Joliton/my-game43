@@ -21,45 +21,37 @@
             background-color: #fff;
             border: 2px solid #000;
         }
-        #startBtn, #restartBtn {
+        button {
             position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 25px 50px;
-            font-size: 24px;
+            padding: 15px 30px;
+            font-size: 20px;
             cursor: pointer;
-            background-color: #4CAF50;
             border: none;
             border-radius: 10px;
             color: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 10;
         }
-        #jumpBtn, #attackBtn {
-            position: absolute;
-            bottom: 20px;
-            padding: 10px;
-            font-size: 14px;
-            cursor: pointer;
-            background-color: #FFA500;
-            border: none;
-            border-radius: 5px;
-            color: white;
+        #startBtn, #restartBtn {
+            background-color: #4CAF50;
+            top: 50px;
         }
         #jumpBtn {
+            background-color: #FFA500;
             left: 20px;
+            bottom: 20px;
         }
         #attackBtn {
+            background-color: #FF4500;
             right: 20px;
+            bottom: 20px;
         }
     </style>
 </head>
 <body>
     <button id="startBtn">Iniciar Jogo</button>
     <button id="restartBtn" style="display: none;">Reiniciar Jogo</button>
-    <button id="jumpBtn" style="display: block;">Pular</button>
-    <button id="attackBtn" style="display: block;">Atacar</button>
+    <button id="jumpBtn">Pular</button>
+    <button id="attackBtn">Atacar</button>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     
     <audio id="jumpSound" src="jump.mp3" preload="auto"></audio>
@@ -168,7 +160,7 @@
         }
 
         function adjustDifficulty() {
-            if (gameTime % 30 === 0 && gameTime > 0) { // Aumenta a dificuldade a cada 30 segundos
+            if (gameTime % 30 === 0 && gameTime > 0) {
                 trashSpeed += 1;
             }
         }
@@ -230,6 +222,17 @@
             alert("Game Over! Você perdeu todas as vidas.");
             document.getElementById('restartBtn').style.display = 'block';
         }
+
+        // Controle para dispositivos de toque
+        document.getElementById('jumpBtn').addEventListener('touchstart', function(event) {
+            event.preventDefault();
+            jump();
+        });
+
+        document.getElementById('attackBtn').addEventListener('touchstart', function(event) {
+            event.preventDefault();
+            attack();
+        });
     </script>
 </body>
 </html>
