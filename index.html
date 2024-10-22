@@ -21,42 +21,45 @@
             background-color: #fff;
             border: 2px solid #000;
         }
-        button {
+        #startBtn, #restartBtn {
             position: absolute;
-            padding: 15px 30px;
-            font-size: 20px;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 25px 50px;
+            font-size: 24px;
             cursor: pointer;
+            background-color: #4CAF50;
             border: none;
             border-radius: 10px;
             color: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
         }
-        #startBtn {
-            background-color: #4CAF50;
-            top: 20px;
-        }
-        #restartBtn {
-            background-color: #FF4500;
-            top: 20px;
-            display: none;
+        #jumpBtn, #attackBtn {
+            position: absolute;
+            bottom: 20px;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #FFA500;
+            border: none;
+            border-radius: 5px;
+            color: white;
         }
         #jumpBtn {
-            background-color: #FFA500;
             left: 20px;
-            bottom: 20px;
         }
         #attackBtn {
-            background-color: #FF4500;
             right: 20px;
-            bottom: 20px;
         }
     </style>
 </head>
 <body>
     <button id="startBtn">Iniciar Jogo</button>
-    <button id="restartBtn">Reiniciar Jogo</button>
-    <button id="jumpBtn">Pular</button>
-    <button id="attackBtn">Atacar</button>
+    <button id="restartBtn" style="display: none;">Reiniciar Jogo</button>
+    <button id="jumpBtn" style="display: block;">Pular</button>
+    <button id="attackBtn" style="display: block;">Atacar</button>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     
     <audio id="jumpSound" src="jump.mp3" preload="auto"></audio>
@@ -68,7 +71,7 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
+        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 10, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
         let trash = [];
         let gameInterval;
         let gameTime = 0;
@@ -96,7 +99,7 @@
         }
 
         function initGame() {
-            tiger.hp = 3;
+            tiger.hp = 10; // Aumentar a quantidade de vidas para 10
             tiger.points = 0;
             trash = [];
             gameTime = 0;
@@ -109,7 +112,7 @@
 
         function spawnTrash() {
             setInterval(() => {
-                if (trash.length < 3) {
+                if (trash.length < 2) { // Reduzir a quantidade de inimigos
                     const trashItem = { x: canvas.width, y: 300, width: 30, height: 30 };
                     trash.push(trashItem);
                 }
@@ -161,13 +164,6 @@
             drawTrash();
             updateTrashPosition();
             drawStats();
-            adjustDifficulty();
-        }
-
-        function adjustDifficulty() {
-            if (gameTime % 30 === 0 && gameTime > 0) {
-                trashSpeed += 1;
-            }
         }
 
         function updateTiger() {
@@ -227,26 +223,6 @@
             alert("Game Over! Você perdeu todas as vidas.");
             document.getElementById('restartBtn').style.display = 'block';
         }
-
-        // Controle para dispositivos de toque
-        document.getElementById('jumpBtn').addEventListener('touchstart', function(event) {
-            event.preventDefault(); // Previne a ação padrão do toque
-            jump();
-        });
-
-        document.getElementById('attackBtn').addEventListener('touchstart', function(event) {
-            event.preventDefault(); // Previne a ação padrão do toque
-            attack();
-        });
-
-        // Adicionando eventos touchend para evitar múltiplos toques
-        document.getElementById('jumpBtn').addEventListener('touchend', function(event) {
-            event.preventDefault();
-        });
-
-        document.getElementById('attackBtn').addEventListener('touchend', function(event) {
-            event.preventDefault();
-        });
     </script>
 </body>
 </html>
