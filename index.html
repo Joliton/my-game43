@@ -71,7 +71,7 @@
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 10, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
+        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
         let trash = [];
         let gameInterval;
         let gameTime = 0;
@@ -99,7 +99,7 @@
         }
 
         function initGame() {
-            tiger.hp = 10; // Aumentar a quantidade de vidas para 10
+            tiger.hp = 3;
             tiger.points = 0;
             trash = [];
             gameTime = 0;
@@ -112,7 +112,7 @@
 
         function spawnTrash() {
             setInterval(() => {
-                if (trash.length < 2) { // Reduzir a quantidade de inimigos
+                if (trash.length < 3) {
                     const trashItem = { x: canvas.width, y: 300, width: 30, height: 30 };
                     trash.push(trashItem);
                 }
@@ -164,6 +164,13 @@
             drawTrash();
             updateTrashPosition();
             drawStats();
+            adjustDifficulty();
+        }
+
+        function adjustDifficulty() {
+            if (gameTime % 30 === 0 && gameTime > 0) { // Aumenta a dificuldade a cada 30 segundos
+                trashSpeed += 1;
+            }
         }
 
         function updateTiger() {
