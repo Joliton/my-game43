@@ -66,15 +66,19 @@
         const ctx = canvas.getContext('2d');
 
         const backgroundImage = new Image();
-        backgroundImage.src = 'https://projetocolabora.com.br/wp-content/uploads/2018/12/058_2150502-scaled.jpg';
+        backgroundImage.src = 'https://img.freepik.com/vetores-premium/lixo-na-rua_1308-22893.jpg';
 
         const trashImage = new Image();
         trashImage.src = 'https://www.pinclipart.com/picdir/big/559-5599148_about-desenho-de-lata-lixo-clipart.png';
 
-        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
+        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 15, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
         let trash = [];
         let gameInterval;
         let gameTime = 0;
+
+        backgroundImage.onload = function() {
+            document.getElementById('startBtn').style.display = 'block'; // Exibe o botão apenas após a imagem carregar
+        };
 
         document.getElementById('startBtn').onclick = startGame;
         document.getElementById('jumpBtn').onclick = jump;
@@ -89,7 +93,7 @@
         });
 
         function startGame() {
-            tiger.hp = 3;
+            tiger.hp = 15;  // Aumentando as vidas para 15
             tiger.points = 0;
             trash = [];
             gameTime = 0;
