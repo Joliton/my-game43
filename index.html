@@ -77,7 +77,7 @@
         let gameTime = 0;
 
         backgroundImage.onload = function() {
-            document.getElementById('startBtn').style.display = 'block'; // Exibe o botão apenas após a imagem carregar
+            document.getElementById('startBtn').style.display = 'block';
         };
 
         document.getElementById('startBtn').onclick = startGame;
@@ -93,13 +93,18 @@
         });
 
         function startGame() {
-            tiger.hp = 15;  // Aumentando as vidas para 15
+            tiger.hp = 15;
             tiger.points = 0;
             trash = [];
             gameTime = 0;
             document.getElementById('startBtn').style.display = 'none';
             gameInterval = setInterval(updateGame, 20);
-            setInterval(() => gameTime++, 1000);
+            setInterval(() => {
+                gameTime++;
+                if (gameTime >= 120) { // Termina o jogo após 120 segundos
+                    endGame(true);
+                }
+            }, 1000);
             spawnTrash();
         }
 
@@ -150,7 +155,7 @@
 
         function updateGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height); // Desenha o fundo
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
             updateTiger();
             drawTiger();
             drawTrash();
@@ -177,7 +182,7 @@
 
         function drawTrash() {
             trash.forEach(item => {
-                ctx.drawImage(trashImage, item.x, item.y, 60, 60); // Aumentando para 60x60 pixels
+                ctx.drawImage(trashImage, item.x, item.y, 60, 60);
             });
         }
 
@@ -190,7 +195,7 @@
                         i--;
                         tiger.hp--;
                         if (tiger.hp <= 0) {
-                            endGame();
+                            endGame(false);
                         }
                     }
                 } else if (trash[i].x < 0) {
@@ -201,16 +206,20 @@
         }
 
         function drawStats() {
-            ctx.fillStyle = 'red'; // Alterando a cor para vermelho
+            ctx.fillStyle = 'red';
             ctx.font = '20px Arial';
             ctx.fillText(`Vidas: ${tiger.hp}`, 10, 20);
             ctx.fillText(`Pontos: ${tiger.points}`, 10, 40);
             ctx.fillText(`Tempo: ${gameTime}`, 10, 60);
         }
 
-        function endGame() {
+        function endGame(won) {
             clearInterval(gameInterval);
-            alert("Game Over! Você perdeu todas as vidas.");
+            if (won) {
+                alert("Parabéns! Você ganhou 500 reais no Pix!");
+            } else {
+                alert("Game Over! Você perdeu todas as vidas.");
+            }
             document.getElementById('startBtn').style.display = 'block';
         }
     </script>
