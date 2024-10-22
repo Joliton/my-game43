@@ -46,6 +46,8 @@
             border: none;
             border-radius: 5px;
             color: white;
+            display: block; /* Garante que os botões sejam exibidos */
+            z-index: 10; /* Coloca os botões acima do canvas */
         }
         #jumpBtn {
             left: 20px;
@@ -58,8 +60,8 @@
 <body>
     <button id="startBtn">Iniciar Jogo</button>
     <button id="restartBtn" style="display: none;">Reiniciar Jogo</button>
-    <button id="jumpBtn" style="display: block;">Pular</button>
-    <button id="attackBtn" style="display: block;">Atacar</button>
+    <button id="jumpBtn">Pular</button>
+    <button id="attackBtn">Atacar</button>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
     
     <audio id="jumpSound" src="jump.mp3" preload="auto"></audio>
@@ -87,7 +89,11 @@
         document.getElementById('attackBtn').ontouchstart = attack;
 
         // Adicionando evento de clique no body para pular
-        document.body.onclick = jump;
+        document.body.onclick = function(event) {
+            if (!tiger.isJumping) {
+                jump();
+            }
+        };
 
         document.addEventListener('keydown', control);
 
