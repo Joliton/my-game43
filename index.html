@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo do Tigrinho Money</title>
+    <title>Jogo do meio ambiente</title>
     <style>
         body {
             margin: 0;
@@ -62,21 +62,49 @@
             z-index: 10;
         }
         #projectTitle {
-            margin-top: 50px; /* Aumentado para descer mais */
-            font-size: 28px; /* Aumentado o tamanho do texto */
+            margin-top: 50px;
+            font-size: 28px;
             color: darkgreen;
-            text-align: center; /* Centralizando o texto */
+            text-align: center;
         }
         #projectsBtn {
-            margin-top: 20px; /* Aumentado o espaço acima do botão */
-            padding: 15px 30px; /* Aumentado o padding do botão */
-            font-size: 20px; /* Aumentado o tamanho do texto do botão */
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 20px;
             cursor: pointer;
             background-color: #4CAF50;
             border: none;
             border-radius: 5px;
             color: black;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #questionModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 20;
+            text-align: center;
+        }
+        #questionText {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .answerBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            margin: 5px;
         }
     </style>
 </head>
@@ -89,6 +117,13 @@
 
     <div id="projectTitle">Clique aqui pra visualizar os projetos de matérias descartáveis</div>
     <button id="projectsBtn" onclick="window.location.href='Pagina_2.html'">Projetos</button>
+
+    <div id="questionModal">
+        <div id="questionText"></div>
+        <button class="answerBtn" onclick="checkAnswer(0)"></button>
+        <button class="answerBtn" onclick="checkAnswer(1)"></button>
+        <button class="answerBtn" onclick="checkAnswer(2)"></button>
+    </div>
     
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -107,6 +142,69 @@
         let trash = [];
         let gameInterval;
         let gameTime = 0;
+
+        const questions = [
+            {
+                question: "Qual material pode ser reciclado?",
+                answers: ["Plástico", "Comida", "Papel toalha"],
+                correct: 0
+            },
+            {
+                question: "Qual é o principal gás que causa o efeito estufa?",
+                answers: ["Oxigênio", "Dióxido de carbono", "Hidrogênio"],
+                correct: 1
+            },
+            {
+                question: "O que é compostagem?",
+                answers: ["Transformar lixo em energia", "Decomposição de matéria orgânica", "Reciclar papel"],
+                correct: 1
+            },
+            {
+                question: "Qual destes itens não deve ser reciclado?",
+                answers: ["Vidro", "Papel", "Fraldas usadas"],
+                correct: 2
+            },
+            {
+                question: "O que é a coleta seletiva?",
+                answers: ["Coletar lixo comum", "Separar materiais recicláveis", "Coletar lixo orgânico"],
+                correct: 1
+            },
+            {
+                question: "Qual é a principal fonte de energia renovável?",
+                answers: ["Carvão", "Solar", "Nuclear"],
+                correct: 1
+            },
+            {
+                question: "O que devemos fazer com as pilhas usadas?",
+                answers: ["Descartar no lixo comum", "Reciclar", "Deixar em casa"],
+                correct: 1
+            },
+            {
+                question: "Qual é o impacto do plástico no meio ambiente?",
+                answers: ["Não tem impacto", "Polui os oceanos", "Ajuda os animais"],
+                correct: 1
+            },
+            {
+                question: "Quantos anos leva para o plástico se decompor?",
+                answers: ["5 anos", "100 anos", "500 anos"],
+                correct: 2
+            },
+            {
+                question: "O que é um ecossistema?",
+                answers: ["Um tipo de planta", "Um conjunto de organismos e seu ambiente", "Um tipo de lixo"],
+                correct: 1
+            },
+            {
+                question: "Qual é a melhor forma de reduzir o lixo?",
+                answers: ["Reciclar tudo", "Reutilizar e reduzir", "Jogar fora"],
+                correct: 1
+            },
+            {
+                question: "O que é o efeito estufa?",
+                answers: ["Aquecimento da Terra devido a gases", "Resfriamento da Terra", "Aquecimento de água"],
+                correct: 0
+            }
+        ];
 
         backgroundImage.onload = function() {
             document.getElementById('startBtn').style.display = 'block';
@@ -252,9 +350,31 @@
             if (won) {
                 document.getElementById('victoryMessage').style.display = 'block'; // Mostra a mensagem de vitória
             } else {
-                alert("Game Over! Você perdeu todas as vidas.");
+                showQuestion();
             }
             document.getElementById('startBtn').style.display = 'block';
+        }
+
+        function showQuestion() {
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const question = questions[randomIndex];
+            document.getElementById('questionText').innerText = question.question;
+            const answerButtons = document.querySelectorAll('.answerBtn');
+            answerButtons.forEach((btn, index) => {
+                btn.innerText = question.answers[index];
+            });
+            document.getElementById('questionModal').style.display = 'block';
+        }
+
+        function checkAnswer(selected) {
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const question = questions[randomIndex];
+            if (selected === question.correct) {
+                alert("Correto! Você aprendeu algo novo!");
+            } else {
+                alert("Incorreto! Tente novamente na próxima vez.");
+            }
+            document.getElementById('questionModal').style.display = 'none'; // Fecha o modal
         }
     </script>
 </body>
