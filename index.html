@@ -53,6 +53,14 @@
         #attackBtn {
             right: 20px;
         }
+        #victoryMessage {
+            display: none;
+            position: absolute;
+            top: 100px;
+            font-size: 24px;
+            color: green;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -60,6 +68,7 @@
     <button id="jumpBtn" style="display: block;">Pular</button>
     <button id="attackBtn" style="display: block;">Atacar</button>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <div id="victoryMessage">Parabéns! Você ganhou 500 reais no Pix!</div>
     
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -98,6 +107,7 @@
             trash = [];
             gameTime = 0;
             document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('victoryMessage').style.display = 'none'; // Esconde a mensagem de vitória
             gameInterval = setInterval(updateGame, 20);
             setInterval(() => {
                 gameTime++;
@@ -216,7 +226,7 @@
         function endGame(won) {
             clearInterval(gameInterval);
             if (won) {
-                alert("Parabéns! Você ganhou 500 reais no Pix!");
+                document.getElementById('victoryMessage').style.display = 'block'; // Mostra a mensagem de vitória
             } else {
                 alert("Game Over! Você perdeu todas as vidas.");
             }
