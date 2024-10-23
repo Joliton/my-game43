@@ -83,7 +83,7 @@
         const tigerImage = new Image();
         tigerImage.src = 'https://th.bing.com/th/id/OIP.dHHbtcAfCNgMVUgS7hNdCwHaHu?rs=1&pid=ImgDetMain'; // Nova imagem do tigre
 
-        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 15, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
+        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
         let trash = [];
         let gameInterval;
         let gameTime = 0;
@@ -105,7 +105,7 @@
         });
 
         function startGame() {
-            tiger.hp = 15;
+            tiger.hp = 3; // Alterado para 3
             tiger.points = 0;
             trash = [];
             gameTime = 0;
