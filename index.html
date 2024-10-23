@@ -80,6 +80,9 @@
         const trashImage = new Image();
         trashImage.src = 'https://www.pinclipart.com/picdir/big/559-5599148_about-desenho-de-lata-lixo-clipart.png';
 
+        const tigerImage = new Image();
+        tigerImage.src = 'https://th.bing.com/th/id/OIP.dHHbtcAfCNgMVUgS7hNdCwHaHu?rs=1&pid=ImgDetMain'; // Nova imagem do tigre
+
         let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 15, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
         let trash = [];
         let gameInterval;
@@ -186,8 +189,9 @@
         }
 
         function drawTiger() {
-            ctx.fillStyle = 'orange';
-            ctx.fillRect(tiger.x, tiger.y, tiger.width, tiger.height);
+            const tigerWidth = 60; // Ajuste a largura conforme necessário
+            const tigerHeight = 60; // Ajuste a altura conforme necessário
+            ctx.drawImage(tigerImage, tiger.x, tiger.y, tigerWidth, tigerHeight); // Usa a nova imagem do tigre
         }
 
         function drawTrash() {
