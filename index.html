@@ -135,6 +135,9 @@
         const trashImage = new Image();
         trashImage.src = 'https://www.pinclipart.com/picdir/big/559-5599148_about-desenho-de-lata-lixo-clipart.png';
 
+        const flyingTrashImage = new Image();
+        flyingTrashImage.src = 'URL_DA_IMAGEM_DO_LIXO_QUE_VOA'; // Substitua pelo URL da imagem do lixo que voa
+
         const tigerImage = new Image();
         tigerImage.src = 'https://th.bing.com/th/id/OIP.dHHbtcAfCNgMVUgS7hNdCwHaHu?rs=1&pid=ImgDetMain'; // Nova imagem do tigre
 
@@ -241,8 +244,15 @@
 
         function spawnTrash() {
             setInterval(() => {
-                if (trash.length < 3) {
-                    const trashItem = { x: canvas.width, y: 300, width: 30, height: 30 };
+                if (trash.length < 2) { // Diminui a quantidade de lixo
+                    const isFlying = Math.random() < 0.5; // 50% de chance de ser lixo que voa
+                    const trashItem = {
+                        x: canvas.width,
+                        y: isFlying ? Math.random() * 200 : 300, // Altura aleatória se for voador
+                        width: 30,
+                        height: 30,
+                        isFlying: isFlying
+                    };
                     trash.push(trashItem);
                 }
             }, 2000);
@@ -314,13 +324,23 @@
 
         function drawTrash() {
             trash.forEach(item => {
-                ctx.drawImage(trashImage, item.x, item.y, 60, 60);
+                if (item.isFlying) {
+                    ctx.drawImage(flyingTrashImage, item.x, item.y, 60, 60); // Desenha o lixo que voa
+                } else {
+                    ctx.drawImage(trashImage, item.x, item.y, 60, 60); // Desenha o lixo normal
+                }
             });
         }
 
         function updateTrashPosition() {
             for (let i = 0; i < trash.length; i++) {
-                trash[i].x -= 4;
+                trash[i].x -= 4; // Movimento horizontal
+
+                if (trash[i].isFlying) {
+                    trash[i].y += Math.sin(Date.now() / 100) * 2; // Movimento vertical suave
+                }
+
+                // Verificação de colisão
                 if (trash[i].x < tiger.x + tiger.width && trash[i].x + trash[i].width > tiger.x && trash[i].y + trash[i].height >= tiger.y) {
                     if (!tiger.isJumping) {
                         trash.splice(i, 1);
