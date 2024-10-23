@@ -113,7 +113,7 @@
     <button id="jumpBtn" style="display: block;">Pular</button>
     <button id="attackBtn" style="display: block;">Atacar</button>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <div id="victoryMessage">Parabéns! Você ganhou 500 reais no Pix!</div>
+    <div id="victoryMessage">Parabéns! Você ganhou!! 🥳🥳</div>
 
     <div id="projectTitle">Clique aqui pra visualizar os projetos de matérias descartáveis</div>
     <button id="projectsBtn" onclick="window.location.href='Pagina_2.html'">Projetos</button>
@@ -348,7 +348,8 @@
         function endGame(won) {
             clearInterval(gameInterval);
             if (won) {
-                document.getElementById('victoryMessage').style.display = 'block'; // Mostra a mensagem de vitória
+                document.getElementById('victoryMessage').innerText = "Parabéns! Você ganhou!! 🥳🥳"; // Mensagem de vitória alterada
+                document.getElementById('victoryMessage').style.display = 'block';
             } else {
                 showQuestion();
             }
