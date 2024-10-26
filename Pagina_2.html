@@ -136,13 +136,40 @@
                 transform: translateY(0);
             }
         }
-        .about {
-            background: white;
+        /* Estilo do Modal */
+        .modal {
+            display: none; /* Oculto por padrão */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
             padding: 20px;
+            border: 1px solid var(--cor-secao-border);
             border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            margin-top: 20px;
-            display: none; /* Inicialmente oculto */
+            width: 80%;
+            max-width: 600px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -175,7 +202,6 @@
         <div class="section"><h3>Intenções:</h3><p>______________________________________________________________</p></div>
         <div class="section"><h3>Finalidades:</h3><p>______________________________________________________________</p></div>
     </div>
-    <!-- Repita o bloco de projeto para os demais projetos -->
     <div class="project">
         <h2>Projeto 2</h2>
         <p><strong>Grupo:</strong> ___________</p>
@@ -191,10 +217,87 @@
         <div class="section"><h3>Intenções:</h3><p>______________________________________________________________</p></div>
         <div class="section"><h3>Finalidades:</h3><p>______________________________________________________________</p></div>
     </div>
-    <!-- Adicione mais blocos de projeto conforme necessário -->
+    <div class="project">
+        <h2>Projeto 3</h2>
+        <p><strong>Grupo:</strong> ___________</p>
+        <p><strong>Classe:</strong> ___________</p>
+        <div class="image-container">
+            <img src="imagem3a.jpg" alt="Imagem do Projeto 3">
+            <img src="imagem3b.jpg" alt="Imagem do Projeto 3">
+            <img src="imagem3c.jpg" alt="Imagem do Projeto 3">
+            <img src="imagem3d.jpg" alt="Imagem do Projeto 3">
+            <img src="imagem3e.jpg" alt="Imagem do Projeto 3">
+        </div>
+        <div class="section"><h3>Resumo do Projeto:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Intenções:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>______________________________________________________________</p></div>
+    </div>
+    <div class="project">
+        <h2>Projeto 4</h2>
+        <p><strong>Grupo:</strong> ___________</p>
+        <p><strong>Classe:</strong> ___________</p>
+        <div class="image-container">
+            <img src="imagem4a.jpg" alt="Imagem do Projeto 4">
+            <img src="imagem4b.jpg" alt="Imagem do Projeto 4">
+            <img src="imagem4c.jpg" alt="Imagem do Projeto 4">
+            <img src="imagem4d.jpg" alt="Imagem do Projeto 4">
+            <img src="imagem4e.jpg" alt="Imagem do Projeto 4">
+        </div>
+        <div class="section"><h3>Resumo do Projeto:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Intenções:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>______________________________________________________________</p></div>
+    </div>
+    <div class="project">
+        <h2>Projeto 5</h2>
+        <p><strong>Grupo:</strong> ___________</p>
+        <p><strong>Classe:</strong> ___________</p>
+        <div class="image-container">
+            <img src="imagem5a.jpg" alt="Imagem do Projeto 5">
+            <img src="imagem5b.jpg" alt="Imagem do Projeto 5">
+            <img src="imagem5c.jpg" alt="Imagem do Projeto 5">
+            <img src="imagem5d.jpg" alt="Imagem do Projeto 5">
+            <img src="imagem5e.jpg" alt="Imagem do Projeto 5">
+        </div>
+        <div class="section"><h3>Resumo do Projeto:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Intenções:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>______________________________________________________________</p></div>
+    </div>
+    <div class="project">
+        <h2>Projeto 6</h2>
+        <p><strong>Grupo:</strong> ___________</p>
+        <p><strong>Classe:</strong> ___________</p>
+        <div class="image-container">
+            <img src="imagem6a.jpg" alt="Imagem do Projeto 6">
+            <img src="imagem6b.jpg" alt="Imagem do Projeto 6">
+            <img src="imagem6c.jpg" alt="Imagem do Projeto 6">
+            <img src="imagem6d.jpg" alt="Imagem do Projeto 6">
+            <img src="imagem6e.jpg" alt="Imagem do Projeto 6">
+        </div>
+        <div class="section"><h3>Resumo do Projeto:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Intenções:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>______________________________________________________________</p></div>
+    </div>
+    <div class="project">
+        <h2>Projeto 7</h2>
+        <p><strong>Grupo:</strong> ___________</p>
+        <p><strong>Classe:</strong> ___________</p>
+        <div class="image-container">
+            <img src="imagem7a.jpg" alt="Imagem do Projeto 7">
+            <img src="imagem7b.jpg" alt="Imagem do Projeto 7">
+            <img src="imagem7c.jpg" alt="Imagem do Projeto 7">
+            <img src="imagem7d.jpg" alt="Imagem do Projeto 7">
+            <img src="imagem7e.jpg" alt="Imagem do Projeto 7">
+        </div>
+        <div class="section"><h3>Resumo do Projeto:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Intenções:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>______________________________________________________________</p></div>
+    </div>
+</div>
 
-    <!-- Seção Sobre -->
-    <div class="about" id="aboutSection">
+<!-- Modal -->
+<div id="aboutModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
         <h2>Sobre</h2>
         <p>Esse site foi feito com o propósito de apresentar os projetos feitos pelos alunos, mas também como uma forma de aprendizado. Para mim, foi muito gratificante fazer esse site. Fiz com carinho e aprendi várias coisas no rumo desse grande e maravilhoso projeto.</p>
         <p>Além disso, ele também é para ajudar a divulgar meu site: <a href="https://joalison34.github.io/musica-basica-dang/" target="_blank">https://joalison34.github.io/musica-basica-dang/</a>. Ele é sobre músicas e espero que possam testar. Ele ainda está em desenvolvimento, mas já está ficando incrível. Espero que gostem ❤️</p>
@@ -208,7 +311,8 @@
 <script>
     const toggleThemeButton = document.getElementById('toggleTheme');
     const aboutButton = document.getElementById('aboutButton');
-    const aboutSection = document.getElementById('aboutSection');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeModal = document.querySelector('.close');
     let darkMode = false;
 
     toggleThemeButton.addEventListener('click', () => {
@@ -221,8 +325,17 @@
     });
 
     aboutButton.addEventListener('click', () => {
-        const isVisible = aboutSection.style.display === 'block';
-        aboutSection.style.display = isVisible ? 'none' : 'block';
+        aboutModal.style.display = 'flex'; // Exibe o modal
+    });
+
+    closeModal.addEventListener('click', () => {
+        aboutModal.style.display = 'none'; // Oculta o modal
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === aboutModal) {
+            aboutModal.style.display = 'none'; // Oculta o modal ao clicar fora
+        }
     });
 </script>
 
