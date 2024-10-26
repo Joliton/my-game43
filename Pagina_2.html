@@ -121,6 +121,10 @@
             background-color: #FFD600;
             transform: scale(1.05);
         }
+        /* Estilo do botão "Sobre" no modo escuro */
+        body.dark-mode #aboutButton {
+            color: #006400; /* Verde escuro */
+        }
         .image-container {
             display: flex;
             flex-direction: column;
@@ -170,6 +174,13 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+        /* Estilo do texto do modal */
+        .modal-content {
+            color: black; /* Texto preto de forma definitiva */
+        }
+        .modal-content a {
+            color: orange; /* Cor do link definida como laranja */
         }
     </style>
 </head>
@@ -305,7 +316,6 @@
         <p>Agradeço de coração por fazerem parte dessa jornada! ❤️</p>
     </div>
 </div>
-
 
 <footer>
     <p>&copy; 2024 Projetos de Materiais Descartáveis - Todos os direitos reservados.</p>
