@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird Clone</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        canvas {
+            background: black; /* Fundo preto */
+            border: 2px solid #fff;
+        }
+        .button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #fff;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .button:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="320" height="480"></canvas>
+    <button id="startButton" class="button">Iniciar Jogo</button>
+    <button id="restartButton" class="button" style="display: none;">Recomeçar</button>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const startButton = document.getElementById('startButton');
+        const restartButton = document.getElementById('restartButton');
+
+        let bird = { x: 50, y: 150, width: 20, height: 20, gravity: 0.3, lift: -6, velocity: 0 };
+        let pipes = [];
+        let frame = 0;
+        let score = 0;
+        let gameOver = false;
+        const PIPE_GAP = 130;
+        const PIPE_SPEED = 2; // Velocidade dos canos
+
+        function drawBird() {
+            ctx.fillStyle = '#ffff99'; // Amarelo claro
+            ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+        }
+
+        function drawPipes() {
+            ctx.fillStyle = '#66cc66'; // Verde claro
+            pipes.forEach(pipe => {
+                ctx.fillRect(pipe.x, 0, pipe.width, pipe.top);
+                ctx.fillRect(pipe.x, canvas.height - pipe.bottom, pipe.width, pipe.bottom);
+            });
+        }
+
+        function updatePipes() {
+            if (frame % 90 === 0) {
+                let top = Math.random() * (canvas.height - PIPE_GAP - 40) + 20;
+                let bottom = canvas.height - top - PIPE_GAP;
+
+                pipes.push({ x: canvas.width, top: top, bottom: bottom, width: 30 });
+            }
+            pipes.forEach(pipe => {
+                pipe.x -= PIPE_SPEED; // Usando a constante PIPE_SPEED
+                if (pipe.x + pipe.width < 0) {
+                    pipes.shift();
+                    score++;
+                }
+            });
+        }
+
+        function checkCollision() {
+            pipes.forEach(pipe => {
+                if (bird.x < pipe.x + pipe.width && bird.x + bird.width > pipe.x) {
+                    if (bird.y < pipe.top || bird.y + bird.height > canvas.height - pipe.bottom) {
+                        gameOver = true;
+                    }
+                }
+            });
+            if (bird.y + bird.height >= canvas.height || bird.y < 0) {
+                gameOver = true;
+            }
+        }
+
+        function resetGame() {
+            bird.y = 150;
+            bird.velocity = 0;
+            pipes = [];
+            score = 0;
+            frame = 0;
+            gameOver = false;
+            restartButton.style.display = 'none';
+            update(); // Inicia a atualização do jogo
+        }
+
+        function drawScore() {
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px Arial';
+            ctx.fillText('Score: ' + score, 10, 20);
+        }
+
+        function update() {
+            if (gameOver) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#fff';
+                ctx.font = '30px Arial';
+                ctx.fillText('Game Over!', 50, canvas.height / 2);
+                ctx.font = '16px Arial';
+                ctx.fillText('Press R to Restart', 50, canvas.height / 2 + 30);
+                restartButton.style.display = 'block';
+                return;
+            }
+
+            bird.velocity += bird.gravity;
+            bird.y += bird.velocity;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBird();
+            drawPipes();
+            drawScore();
+            updatePipes();
+            checkCollision();
+
+            frame++;
+            requestAnimationFrame(update);
+        }
+
+        function startGame() {
+            startButton.style.display = 'none';
+            resetGame(); // Reseta o jogo
+            update(); // Inicia a atualização do jogo
+        }
+
+        function jump() {
+            if (!gameOver) {
+                bird.velocity = bird.lift;
+            }
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Space') {
+                jump();
+            }
+            if (event.code === 'KeyR' && gameOver) {
+                resetGame();
+            }
+        });
+
+        startButton.addEventListener('click', startGame);
+        restartButton.addEventListener('click', resetGame);
+        canvas.addEventListener('click', jump);
+    </script>
+</body>
+</html>
