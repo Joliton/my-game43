@@ -112,18 +112,40 @@
     </footer>
 
     <script>
-        document.getElementById('questionForm').onsubmit = function(event) {
+        document.getElementById('questionForm').onsubmit = async function(event) {
             event.preventDefault(); // Evita o envio do formulário
 
             const userInput = document.getElementById('userInput').value;
             const responseContainer = document.getElementById('responseContainer');
 
-            // Simulação de resposta da IA
-            let simulatedResponse = "Desculpe, não tenho uma resposta para isso ainda. Você perguntou: " + userInput;
+            // Salvar a pergunta no histórico
+            saveHistory(userInput);
 
-            // Exibir a resposta
-            responseContainer.innerHTML = "<strong>Resposta da IA:</strong> " + simulatedResponse;
-            responseContainer.style.display = "block";
+            try {
+                const response = await fetch('https://api.seu-endpoint.com', { // Substitua pela URL da sua API
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer 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' // Adicione o token de autenticação
+                    },
+                    body: JSON.stringify({ question: userInput }) // Envie a pergunta no corpo da requisição
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erro ao acessar a API');
+                }
+
+                const data = await response.json();
+                const simulatedResponse = data.response; // Ajustado para a estrutura correta da resposta
+
+                // Exibir a resposta
+                responseContainer.innerHTML = "<strong>Resposta da IA:</strong> " + simulatedResponse;
+                responseContainer.style.display = "block";
+            } catch (error) {
+                console.error('Erro:', error);
+                responseContainer.innerHTML = "<strong>Erro:</strong> Não foi possível obter uma resposta.";
+                responseContainer.style.display = "block";
+            }
 
             // Limpar o campo de entrada
             document.getElementById('userInput').value = '';
@@ -134,26 +156,6 @@
             let history = JSON.parse(localStorage.getItem('chatHistory')) || [];
             history.push(question);
             localStorage.setItem('chatHistory', JSON.stringify(history));
-        }
-
-        // Atualizar a função de envio para salvar a pergunta
-        document.getElementById('questionForm').onsubmit = function(event) {
-            event.preventDefault(); // Evita o envio do formulário
-
-            const userInput = document.getElementById('userInput').value;
-            saveHistory(userInput); // Salva a pergunta no histórico
-
-            const responseContainer = document.getElementById('responseContainer');
-
-            // Simulação de resposta da IA
-            let simulatedResponse = "Desculpe, não tenho uma resposta para isso ainda. Você perguntou: " + userInput;
-
-            // Exibir a resposta
-            responseContainer.innerHTML = "<strong>Resposta da IA:</strong> " + simulatedResponse;
-            responseContainer.style.display = "block";
-
-            // Limpar o campo de entrada
-            document.getElementById('userInput').value = '';
         }
     </script>
 </body>
