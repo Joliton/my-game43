@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Brasil - ChatGPT em Português Gratuito</title>
+    <meta name="description" content="Experimente o ChatGPT Brasil em português com histórico de conversas. Converse com inteligência artificial de última geração, salve seus diálogos e explore o poder do ChatGPT de forma rápida e segura.">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background: #007bff;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            background: #0056b3;
+            padding: 10px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background: #004494;
+        }
+        main {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+        }
+        p {
+            font-size: 1.2em;
+            line-height: 1.5;
+        }
+        .search-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            padding: 10px 15px;
+            border: none;
+            background: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background: #0056b3;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #e7f3fe;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background: #333;
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ChatGPT Brasil</h1>
+        <p>Converse com inteligência artificial de última geração</p>
+    </header>
+    <nav>
+        <a href="#home">Início</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#pesquisa">Pesquisa</a>
+        <a href="#contato">Contato</a>
+    </nav>
+    <main>
+        <h2>Bem-vindo ao ChatGPT Brasil!</h2>
+        <p>Experimente o ChatGPT Brasil em português com histórico de conversas. Salve seus diálogos e explore o poder do ChatGPT de forma rápida e segura.</p>
+        <p>Utilize nossa plataforma para tirar dúvidas, aprender e se divertir com a inteligência artificial.</p>
+
+        <div class="search-container" id="pesquisa">
+            <h3>Faça sua pergunta:</h3>
+            <form id="questionForm">
+                <input type="text" id="userInput" placeholder="Digite sua pergunta aqui..." required>
+                <input type="submit" value="Enviar">
+            </form>
+            <div class="response" id="responseContainer" style="display:none;"></div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 ChatGPT Brasil. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('questionForm').onsubmit = function(event) {
+            event.preventDefault(); // Evita o envio do formulário
+
+            const userInput = document.getElementById('userInput').value;
+            const responseContainer = document.getElementById('responseContainer');
+
+            // Simulação de resposta da IA
+            let simulatedResponse = "Desculpe, não tenho uma resposta para isso ainda. Você perguntou: " + userInput;
+
+            // Exibir a resposta
+            responseContainer.innerHTML = "<strong>Resposta da IA:</strong> " + simulatedResponse;
+            responseContainer.style.display = "block";
+
+            // Limpar o campo de entrada
+            document.getElementById('userInput').value = '';
+        }
+
+        // Função para salvar o histórico de perguntas
+        function saveHistory(question) {
+            let history = JSON.parse(localStorage.getItem('chatHistory')) || [];
+            history.push(question);
+            localStorage.setItem('chatHistory', JSON.stringify(history));
+        }
+
+        // Atualizar a função de envio para salvar a pergunta
+        document.getElementById('questionForm').onsubmit = function(event) {
+            event.preventDefault(); // Evita o envio do formulário
+
+            const userInput = document.getElementById('userInput').value;
+            saveHistory(userInput); // Salva a pergunta no histórico
+
+            const responseContainer = document.getElementById('responseContainer');
+
+            // Simulação de resposta da IA
+            let simulatedResponse = "Desculpe, não tenho uma resposta para isso ainda. Você perguntou: " + userInput;
+
+            // Exibir a resposta
+            responseContainer.innerHTML = "<strong>Resposta da IA:</strong> " + simulatedResponse;
+            responseContainer.style.display = "block";
+
+            // Limpar o campo de entrada
+            document.getElementById('userInput').value = '';
+        }
+    </script>
+</body>
+</html>
