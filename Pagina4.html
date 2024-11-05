@@ -1,0 +1,226 @@
+<html lang="pt-br">
+<head><meta charset="UTF-8" /><title>CMSP Web</title>
+<meta property="og:title" content="CMSP Web"/>
+<meta property="og:description" content="Centro de Mídias do Estado de São Paulo."/>
+<meta property="og:image" content="https://edusp-static.ip.tv/webinar/edusp/login_logo.png"/>
+<link  id="favicon" rel="icon" type="image/png" href="https://edusp-static.ip.tv/webinar/edusp/favicon.png" sizes="32x32">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://edusp-static.ip.tv/webinar/edusp/css.css" rel="stylesheet" type="text/css">
+<script type="module">
+  import QrScanner from "https://cdn.jsdelivr.net/npm/qr-scanner/qr-scanner.min.js";
+  window.QrScanner = QrScanner;
+</script>
+</head>
+<body>
+
+<div id="block" style="display:none;width:100%;height:100%;position:absolute;"></div>
+
+<div id="login" class="frm"  style="background-image: url(https://edusp-static.ip.tv/webinar/edusp/background.png); z-index:0;">
+  <div id="login-select" class="login-panel fr bgw sha" style="display:none;width:337px;height:465px">
+    <div class="fic fc w100">
+    <div class="fic"><img id="logoImg" src="https://edusp-static.ip.tv/webinar/edusp/login_logo.png" class="logo fic pt10 pb10" style="width:275px;height:auto;" c="0"></div>
+    <div class="fic sn p10 b" style="width:300px;text-align:center;">Selecione o ambiente em que deseja fazer o login</div>
+    <div class="fic p10">
+      <div class="fic sxs pt10 pb10">
+        <div id="access-student" class="fic bt cb tw sn" style="width:275px;height:44px;border:0px;background-color:#00327e;" c="0">Acesso para alunos</div>
+      </div>
+      <div class="fic sxs pt10 pb10">
+        <div id="access-teacher" class="access-teacher fic bt cb tw sn" style="width:275px;height:44px;border:0px;background-color:#00327e;">Servidor</div>
+      </div>
+      <div class="fic sxs pt10 pb10">
+        <div id="access-teacher" class="access-teacher fic bt cb tw sn" style="width:275px;height:44px;border:0px;background-color:#00327e;">Responsável ou Familiar</div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div id="login-teacher" class="fr bgw sha" style="display:none;width:337px;height:570px">
+    <div class="fic fc w100">
+    <div class="fic"><img src="https://edusp-static.ip.tv/webinar/edusp/login_logo.png" class="logo fic pt10 pb10" style="width:275px;height:auto;"></div>
+    <div class="fic ss p5 b" style="width:275px;text-align:center;">Para acessar, utilize o mesmo login da SED</div>
+    <div class="fic sn fr" style="width:275px">
+      <div class="pt10 pb5">
+        <div class="sxs">&nbsp;</div>
+        <div>
+          <select id="doc-teacher" class="doc sn" style="width:53px;border:none;background-color:#FFFFFF;">
+            <option value="rg">RG</option>
+            <option value="rne">RNE</option>
+          </select>
+          <input class="in sn pl5" id="rg-teacher" name="rg" type="text" style="text-align:left;width:157px;height:30px;">
+        </div>
+      </div>
+      <div class="pt10 pb5 pl10">
+        <div class="sxs" style="width:50px;text-align:center;">UF</div>
+        <div>
+          <select id="uf-teacher" name="estado" class="uf sn" style="border:none;background-color:#FFFFFF;width:50px;height:30px;">
+            <option value="ac">AC</option>
+            <option value="al">AL</option>
+            <option value="ap">AP</option>
+            <option value="am">AM</option>
+            <option value="ba">BA</option>
+            <option value="ce">CE</option>
+            <option value="df">DF</option>
+            <option value="es">ES</option>
+            <option value="go">GO</option>
+            <option value="ma">MA</option>
+            <option value="mt">MT</option>
+            <option value="ms">MS</option>
+            <option value="mg">MG</option>
+            <option value="pa">PA</option>
+            <option value="pb">PB</option>
+            <option value="pr">PR</option>
+            <option value="pe">PE</option>
+            <option value="pi">PI</option>
+            <option value="rj">RJ</option>
+            <option value="rn">RN</option>
+            <option value="rs">RS</option>
+            <option value="ro">RO</option>
+            <option value="rr">RR</option>
+            <option value="sc">SC</option>
+            <option value="sp" selected>SP</option>
+            <option value="se">SE</option>
+            <option value="to">TO</option>
+          </select>
+          <div class="uf-foreign" style="width:50px;text-align:center;display:none;">-</div>
+        </div>
+      </div>
+    </div>
+    <div class="fic sn pt10" style="width:275px;padding-bottom:10px;">
+      <div class="pt10 sxs">Senha:</div>
+      <div>
+        <input class="passwordfield in sn pl5" id="password-teacher" type="password" name="password" style="text-align:left;width:250px;height:30px;">
+        <span class="showpassword material-icons" style="font-size:15px;width:15px">&#xE8F4;</span>
+      </div>
+    </div>
+    <div class="alert fic sxs b tr pl10 pr10" style="min-height:16px;text-align:center;"><!--alert--></div>
+    <div class="fic p10">
+      <div class="fic sxs pt5 pb5">
+        <input id="btn-login-teacher" name="teacher" type="submit" class="btn-login fic bt cb tw sn sha" style="width:236px;height:44px;border:0px;background-color:#325794;" value="Entrar" />
+      </div>
+      <div class="fic sxs pt5 pb5">
+        <div name="back" type="submit" class="btn-back fic bt cb tw sn bgw bor sha" style="width:236px;height:44px;color:#325794;" value="Voltar">Voltar</div>
+      </div>
+    </div>
+    <div class="fic pt5 pb5 sxs pt" style="width:275px;text-align:center;">
+      <a class="toj" href="http://atendimento.educacao.sp.gov.br/" target="_blank">
+        Precisa de Suporte? Acesse o <span class="b" style="text-decoration:underline;">portal de atendimento SED</span> e abra uma ocorr&ecirc;ncia ou ligue para 0800 77 00012.
+      </a>
+    </div>
+  </div>
+  </div>
+  <div id="login-student" class="fr bgw sha" style="display:none;width:380px;height:590px">
+      <div class="fic fc w100">
+      <div class="fic"><img src="https://edusp-static.ip.tv/webinar/edusp/login_logo.png" class="logo fic pt10 pb10" style="width:275px;height:auto;"></div>
+      <div class="fic ss p5 b" style="width:275px;text-align:center;">Para acessar, utilize o mesmo login da SED</div>
+      <div class="fic sn fr" style="width:275px">
+        <div class="pt10 pb5">
+          <div class="sxs">RA</div>
+          <div><input class="in sn pl5" id="ra-student" name="ra" type="text" style="text-align:left;width:180px;height:30px;"></div>
+        </div>
+        <div class="pt10 pb5" style="width:10px;">
+          <div class="sxs">&nbsp;</div>
+          <div class="pl5 pr5" style="height:30px;">-</div>
+        </div>
+        <div class="pt10 pb5">
+          <div class="sxs">D&iacute;gito</div>
+          <div><input class="in sn pl5 pr10" id="digit-student" name="ra" type="text" maxlength="2" style="text-align:left;width:35px;height:30px;"></div>
+        </div>
+        <div class="pt10 pb5 pl10">
+          <div class="sxs" style="width:50px;text-align:center;">UF</div>
+          <div>
+            <select id="uf-student" name="estado" class="sn" style="border:none;background-color:#FFFFFF;width:50px;height:30px;">
+              <option value="ac">AC</option>
+              <option value="al">AL</option>
+              <option value="ap">AP</option>
+              <option value="am">AM</option>
+              <option value="ba">BA</option>
+              <option value="ce">CE</option>
+              <option value="df">DF</option>
+              <option value="es">ES</option>
+              <option value="go">GO</option>
+              <option value="ma">MA</option>
+              <option value="mt">MT</option>
+              <option value="ms">MS</option>
+              <option value="mg">MG</option>
+              <option value="pa">PA</option>
+              <option value="pb">PB</option>
+              <option value="pr">PR</option>
+              <option value="pe">PE</option>
+              <option value="pi">PI</option>
+              <option value="rj">RJ</option>
+              <option value="rn">RN</option>
+              <option value="rs">RS</option>
+              <option value="ro">RO</option>
+              <option value="rr">RR</option>
+              <option value="sc">SC</option>
+              <option value="sp" selected>SP</option>
+              <option value="se">SE</option>
+              <option value="to">TO</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="fic sn pt10" style="width:275px;padding-bottom:10px;">
+        <div class="pt10 sxs">Senha:</div>
+        <div>
+          <input class="passwordfield in sn pl5" id="password-student" type="password" name="password" style="text-align:left;width:255px;height:30px;">
+          <span class="showpassword material-icons" style="font-size:15px;width:15px">&#xE8F4;</span>
+        </div>
+      </div>
+      <div id="alert" class="alert fic sxs b tr pl10 pr10" style="min-height:16px;text-align:center;"><!--alert--></div>
+      <div class="fic p10">
+        <div class="fic sxs pt5 pb5">
+          <input id="btn-login-student" name="student" type="submit" class="btn-login fic bt cb tw sn sha" style="width:236px;height:44px;border:0px;background-color:#325794;" value="Entrar" />
+        </div>
+        <div class="fic sxs pt5 pb5">
+          <div name="back" type="submit" class="btn-back fic bt cb tw sn bgw bor sha" style="width:236px;height:44px;color:#325794;" value="Voltar">Voltar</div>
+        </div>
+      </div>
+      <div class="fic pt10 pb5 sxs pt">
+        <a class="toj b" href="http://consultara.educacao.sp.gov.br" target="_blank">
+            Esqueceu o RA? <span class="b" style="text-decoration:underline;">Clique aqui.</span>
+        </a>
+      </div>
+      <div class="fic pt10 pb5 sxs pt" style="width:300px;text-align:center;">
+        <a class="toj b" href="http://esqueciasenha.educacao.sp.gov.br" target="_blank">
+            Esqueceu sua senha? <span class="b" style="text-decoration:underline;">Acesse aqui</span>, clique em esqueci a senha e siga as instruções.
+        </a>
+      </div>
+    </div>
+  </div>
+  <div id="login-iptv" class="fr bgw sha" style="display:none;width:380px;height:470px">
+      <div class="fic fc w100">
+      <div class="fic"><img src="https://edusp-static.ip.tv/webinar/edusp/login_logo.png" class="logo fic pt10 pb10" style="width:275px;height:auto;"></div>
+      <div class="fic sn fr" style="width:275px">
+        <div class="pt10 pb5">
+          <div class="sxs">USU&Aacute;RIO IP.TV(NICK)</div>
+          <div><input class="in sn pl5" id="username-iptv" name="ra" type="text" style="text-align:left;width:275px;height:30px;"></div>
+        </div>
+      </div>
+      <div class="fic sn pt10" style="width:275px;padding-bottom:10px;">
+        <div class="pt10 sxs">Senha:</div>
+        <div>
+          <input class="passwordfield in sn pl5" id="password-iptv" type="password" name="password" style="text-align:left;width:255px;height:30px;">
+          <span class="showpassword material-icons" style="font-size:15px;width:15px">&#xE8F4;</span>
+        </div>
+      </div>
+      <div class="alert fic sxs b tr pl10 pr10" style="min-height:16px;text-align:center;"><!--alert--></div>
+      <div class="fic p10">
+        <div class="fic sxs pt5 pb5">
+          <input id="btn-login-iptv" name="iptv" type="submit" class="btn-login fic bt cb tw sn sha" style="width:260px;height:44px;border:0px;background-color:#325794;" value="ENTRAR COM USUÁRIO IP.TV" />
+        </div>
+        <div class="fic sxs pt5 pb5">
+          <div name="back" type="submit" class="btn-back fic bt cb tw sn bgw bor sha" style="width:260px;height:44px;color:#325794;" value="Voltar">Voltar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bgw frm w100" style="height:60px;border: 1px solid #CCCCCC;position:absolute;bottom:0px;"><div class="fic" style="margin-left:auto;margin-right:auto;">
+    Ao utilizar o aplicativo Centro de Mídias SP, você concorda com os <a href="https://cmsp.ip.tv/terms" target="_blank" style="text-decoration: none;color:#00327e;">Termos de Uso</a> e a <a href="https://cmsp.ip.tv/privacy" target="_blank" style="text-decoration: none;color:#00327e;">Política de Privacidade</a>
+  </div></div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://edusp-static.ip.tv/webinar/common/js.js?ts=1730827848140"></script>
+</body>
+</html>
