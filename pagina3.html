@@ -6,80 +6,7 @@
     <title>ChatGPT Brasil - ChatGPT em Português Gratuito</title>
     <meta name="description" content="Experimente o ChatGPT Brasil em português com histórico de conversas. Converse com inteligência artificial de última geração, salve seus diálogos e explore o poder do ChatGPT de forma rápida e segura.">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background: #007bff;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        nav {
-            background: #0056b3;
-            padding: 10px;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            margin: 0 5px;
-            border-radius: 5px;
-        }
-        nav a:hover {
-            background: #004494;
-        }
-        main {
-            padding: 20px;
-        }
-        h1 {
-            font-size: 2.5em;
-        }
-        p {
-            font-size: 1.2em;
-            line-height: 1.5;
-        }
-        .search-container {
-            margin: 20px 0;
-            text-align: center;
-        }
-        input[type="text"] {
-            padding: 10px;
-            width: 300px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        input[type="submit"] {
-            padding: 10px 15px;
-            border: none;
-            background: #007bff;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background: #0056b3;
-        }
-        .response {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background: #e7f3fe;
-        }
-        footer {
-            text-align: center;
-            padding: 10px 0;
-            background: #333;
-            color: #fff;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
+        /* Seu CSS vai aqui */
     </style>
 </head>
 <body>
@@ -96,7 +23,6 @@
     <main>
         <h2>Bem-vindo ao ChatGPT Brasil!</h2>
         <p>Experimente o ChatGPT Brasil em português com histórico de conversas. Salve seus diálogos e explore o poder do ChatGPT de forma rápida e segura.</p>
-        <p>Utilize nossa plataforma para tirar dúvidas, aprender e se divertir com a inteligência artificial.</p>
 
         <div class="search-container" id="pesquisa">
             <h3>Faça sua pergunta:</h3>
@@ -122,13 +48,17 @@
             saveHistory(userInput);
 
             try {
-                const response = await fetch('https://api.seu-endpoint.com', { // Substitua pela URL da sua API
+                const response = await fetch('https://api.openai.com/v1/chat/completions', { // URL da API
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer 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' // Adicione o token de autenticação
+                        'Authorization': 'Bearer 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' // Substitua pela sua chave de API
                     },
-                    body: JSON.stringify({ question: userInput }) // Envie a pergunta no corpo da requisição
+                    body: JSON.stringify({
+                        model: 'gpt-4o-mini', // Altere para o modelo desejado
+                        messages: [{ role: 'user', content: userInput }],
+                        temperature: 0.7 // Ajuste a temperatura conforme necessário
+                    })
                 });
 
                 if (!response.ok) {
@@ -136,7 +66,7 @@
                 }
 
                 const data = await response.json();
-                const simulatedResponse = data.response; // Ajustado para a estrutura correta da resposta
+                const simulatedResponse = data.choices[0].message.content; // Ajuste para a estrutura correta da resposta
 
                 // Exibir a resposta
                 responseContainer.innerHTML = "<strong>Resposta da IA:</strong> " + simulatedResponse;
