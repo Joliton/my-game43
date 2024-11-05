@@ -10,17 +10,48 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://edusp-static.ip.tv/webinar/edusp/css.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url(https://edusp-static.ip.tv/webinar/edusp/background.png);
+            background-size: cover;
+        }
+        #login-student {
+            width: 100%;
+            max-width: 400px; /* Limite a largura máxima */
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com transparência */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .btn-login {
+            width: 100%;
+            height: 44px;
+            background-color: #325794;
+            border: 0;
+            color: white;
+            cursor: pointer;
+        }
+        .alert {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 
-<div id="login-student" class="fr bgw sha" style="width:380px;height:590px">
+<div id="login-student" class="fr bgw sha">
     <div class="fic fc w100">
         <div class="fic"><img src="https://edusp-static.ip.tv/webinar/edusp/login_logo.png" class="logo fic pt10 pb10" style="width:275px;height:auto;"></div>
         <div class="fic ss p5 b" style="width:275px;text-align:center;">Para acessar, utilize o mesmo login da SED</div>
         <div class="fic sn fr" style="width:275px">
             <div class="pt10 pb5">
                 <div class="sxs">RA</div>
-                <div><input class="in sn pl5" id="ra-student" name="ra" type="text" style="text-align:left;width:180px;height:30px;"></div>
+                <div><input class="in sn pl5" id="ra-student" name="ra" type="text" style="text-align:left;width:100%;height:30px;"></div>
             </div>
             <div class="pt10 pb5" style="width:10px;">
                 <div class="sxs">&nbsp;</div>
@@ -28,20 +59,20 @@
             </div>
             <div class="pt10 pb5">
                 <div class="sxs">Dígito</div>
-                <div><input class="in sn pl5 pr10" id="digit-student" name="ra" type="text" maxlength="2" style="text-align:left;width:35px;height:30px;"></div>
+                <div><input class="in sn pl5 pr10" id="digit-student" name="ra" type="text" maxlength="2" style="text-align:left;width:100%;height:30px;"></div>
             </div>
         </div>
         <div class="fic sn pt10" style="width:275px;padding-bottom:10px;">
             <div class="pt10 sxs">Senha:</div>
             <div>
-                <input class="passwordfield in sn pl5" id="password-student" type="password" name="password" style="text-align:left;width:255px;height:30px;">
+                <input class="passwordfield in sn pl5" id="password-student" type="password" name="password" style="text-align:left;width:100%;height:30px;">
                 <span class="showpassword material-icons" style="font-size:15px;width:15px">&#xE8F4;</span>
             </div>
         </div>
         <div id="alert" class="alert fic sxs b tr pl10 pr10" style="min-height:16px;text-align:center;"></div>
         <div class="fic p10">
             <div class="fic sxs pt5 pb5">
-                <input id="btn-login-student" name="student" type="button" class="btn-login fic bt cb tw sn sha" style="width:236px;height:44px;border:0px;background-color:#325794;" value="Entrar" />
+                <input id="btn-login-student" name="student" type="button" class="btn-login fic bt cb tw sn sha" value="Entrar" />
             </div>
         </div>
     </div>
