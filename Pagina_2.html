@@ -359,6 +359,38 @@
     </div>
 </div>
 
+<script>
+    const toggleThemeButton = document.getElementById('toggleTheme');
+    const aboutButton = document.getElementById('aboutButton');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeModal = document.querySelector('.close');
+    let darkMode = false;
+
+    toggleThemeButton.addEventListener('click', () => {
+        darkMode = !darkMode;
+        document.body.classList.toggle('dark-mode', darkMode);
+        document.querySelectorAll('.project').forEach(project =>
+            project.classList.toggle('dark-mode', darkMode)
+        );
+        toggleThemeButton.textContent = darkMode ? 'Mudar para Modo Claro' : 'Mudar para Modo Escuro';
+    });
+
+    aboutButton.addEventListener('click', () => {
+        aboutModal.style.display = 'flex'; // Exibe o modal
+    });
+
+    closeModal.addEventListener('click', () => {
+        aboutModal.style.display = 'none'; // Oculta o modal
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === aboutModal) {
+            aboutModal.style.display = 'none'; // Oculta o modal ao clicar fora
+        }
+    });
+</script>
+
+
 <footer>
     <p>&copy; 2024 Projetos de Materiais Descartáveis - Todos os direitos reservados.</p>
 </footer>
