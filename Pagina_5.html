@@ -45,8 +45,8 @@
             margin: auto;
             padding: 20px;
             display: flex;
-            flex-direction: column; /* Mudança para coluna */
-            align-items: center; /* Centraliza os itens */
+            flex-direction: column;
+            align-items: center;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             padding: 30px;
@@ -59,9 +59,9 @@
             text-align: center;
             transition: transform 0.3s, background 0.3s;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            margin: 10px 0; /* Espaçamento entre os cartões */
-            width: 100%; /* Faz o cartão ocupar toda a largura disponível */
-            max-width: 300px; /* Limita a largura máxima do cartão */
+            margin: 10px 0;
+            width: 100%;
+            max-width: 300px;
         }
         .link-card:hover {
             transform: translateY(-5px);
@@ -79,6 +79,50 @@
             position: relative;
             bottom: 0;
             width: 100%;
+        }
+        /* Estilos do Modal */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #ff6347; /* Cor para destacar o texto */
         }
 
         /* Estilos para dispositivos móveis */
@@ -104,7 +148,7 @@
         <h1>Central Educacional</h1>
         <nav>
             <a href="#">Home</a>
-            <a href="#">Sobre</a>
+            <a href="#" id="aboutBtn">Sobre</a>
             <a href="#">Contato</a>
         </nav>
     </header>
@@ -125,5 +169,46 @@
     <footer>
         <p>&copy; 2024 Central Educacional. Todos os direitos reservados.</p>
     </footer>
+
+    <!-- Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Sobre</h2>
+            <p class="highlight">Este site nasceu do meu desejo sincero de compartilhar e celebrar a criatividade dos alunos através dos projetos que eles desenvolveram. Cada um desses trabalhos é uma expressão única de esforço e dedicação, mesmo em momentos em que a motivação parece se esvair e os desafios se acumulam como um peso insuportável.</p>
+            <p>Criar este espaço tem sido um alívio, mas também uma fonte de confusão. Às vezes, me pego refletindo sobre o dia que passou e me questionando se realmente vou acordar para enfrentar mais um novo amanhecer. A arte, que deveria ser um refúgio, muitas vezes reflete as batalhas internas que luto diariamente. Sinto como se estivesse lutando contra um passado que se recusa a me deixar em paz, como se demônios invisíveis caminhassem ao meu lado, esperando o momento certo para me derrubar. Quando me perguntam se estou bem, finjo que tudo está sob controle. Mas, na verdade, a tempestade interna parece interminável. Às vezes, me pergunto se alguém realmente se importa, enquanto me sinto preso em um ciclo de solidão, mesmo cercado por amigos. Essa sensação de vazio se torna tão familiar que parece uma companhia constante, como se a solidão tivesse se tornado minha amiga.</p>
+            <p>Os projetos apresentados aqui são dos alunos, que, apesar de suas próprias lutas, se mostram radiantes ao compartilhar suas criações. Cada uma dessas obras é uma busca por significado em meio às dificuldades, um reflexo de que, mesmo quando tudo parece desmoronar, ainda há espaço para a esperança. A arte se transforma em um grito silencioso, uma forma de encontrar paz, mesmo que temporária. Convido você a explorar esses projetos, permitindo-se sentir a luz que eles trazem, mesmo nas horas mais sombrias. A arte é uma expressão de dor, mas também de resiliência, e, juntos, podemos encontrar um fio de esperança em meio à tempestade.</p>
+            <p>Quero também convidá-los a conhecer meu outro projeto: <a href="https://joalison34.github.io/musica-basica-dang/" target="_blank">Mundo Da Música</a>. Esse site é muito especial para mim e, nos últimos três meses, tenho me dedicado a atualizá-lo frequentemente, buscando trazer novidades e melhorar a experiência de quem visita. Para mim, ele é mais do que um simples site; é um reflexo do meu esforço e crescimento, mesmo quando a inspiração parece distante e o cansaço mental me envolve como uma névoa pesada.</p>
+            <p>Agradeço de coração por fazerem parte dessa jornada, mesmo em meio a dias difíceis. ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // Obtém o modal
+        var modal = document.getElementById("aboutModal");
+
+        // Obtém o botão que abre o modal
+        var btn = document.getElementById("aboutBtn");
+
+        // Obtém o elemento <span> que fecha o modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Quando o usuário clica no botão, abre o modal 
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Quando o usuário clica no <span> (x), fecha o modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Quando o usuário clica fora do modal, fecha-o
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
