@@ -181,18 +181,14 @@ function jump() {
     }
 }
 
-function updateTiger() {
-    if (tiger.isJumping) {
-        tiger.y += tiger.jumpVelocity;
-        tiger.jumpVelocity += tiger.gravity;
+// Chamada da função de pulo
+document.getElementById('jumpBtn').onclick = jump;
 
-        if (tiger.y >= 300) { // Aterrissa
-            tiger.y = 300;
-            tiger.isJumping = false;
-            jumpCount = 0; // Reseta o contador de pulos ao aterrissar
-        }
+document.addEventListener('keydown', function(event) {
+    if (event.key === ' ' && !tiger.isJumping) {
+        jump();
     }
-}
+});
 
 
         backgroundImage.onload = function() {
