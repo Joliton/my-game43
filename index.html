@@ -143,68 +143,34 @@
         let gameInterval;
         let gameTime = 0;
 
-        const questions = [
-            {
-                question: "Qual é o problema principal do uso de plásticos descartáveis?",
-                answers: ["Poluição dos oceanos", "Não se decompõem", "Aumentam o aquecimento global"],
-                correct: 0 // Resposta correta: Poluição dos oceanos
-            },
-            {
-                question: "Qual desses materiais se decompõe mais facilmente?",
-                answers: ["Plástico", "Papel", "Vidro"],
-                correct: 1 // Resposta correta: Papel
-            },
-            {
-                question: "Como podemos reduzir o uso de descartáveis?",
-                answers: ["Reutilizar itens", "Usar mais plástico", "Comprar mais embalagens"],
-                correct: 0 // Resposta correta: Reutilizar itens
-            },
-            {
-                question: "O que significa 'Lixo Zero'?",
-                answers: ["Não produzir lixo", "Minimizar o lixo que vai para aterros", "Aumentar o uso de plásticos"],
-                correct: 1 // Resposta correta: Minimizar o lixo que vai para aterros
-            },
-            {
-                question: "Qual é o impacto das sacolas plásticas no meio ambiente?",
-                answers: ["Elas se decompõem rapidamente", "Elas demoram muito para se decompor", "Elas ajudam a natureza"],
-                correct: 1 // Resposta correta: Elas demoram muito para se decompor
-            },
-            {
-                question: "O que é lixo eletrônico?",
-                answers: ["Lixo comum", "Eletrônicos quebrados", "Lixo reciclável"],
-                correct: 1 // Resposta correta: Eletrônicos quebrados
-            },
-            {
-                question: "Qual é uma boa maneira de reciclar?",
-                answers: ["Misturar tudo no lixo", "Separar o reciclável", "Queimar o reciclável"],
-                correct: 1 // Resposta correta: Separar o reciclável
-            },
-            {
-                question: "Qual é o problema de jogar pilhas no lixo?",
-                answers: ["Elas não causam problemas", "Elas liberam substâncias tóxicas", "Elas ajudam o solo"],
-                correct: 1 // Resposta correta: Elas liberam substâncias tóxicas
-            },
-            {
-                question: "Quais são os benefícios da compostagem?",
-                answers: ["Reduzir lixo e criar adubo", "Aumentar o lixo", "Poluir o ar"],
-                correct: 0 // Resposta correta: Reduzir lixo e criar adubo
-            },
-            {
-                question: "Qual é uma alternativa melhor às garrafas plásticas?",
-                answers: ["Garrafas descartáveis", "Garrafas de vidro reutilizáveis", "Garrafas de papel"],
-                correct: 1 // Resposta correta: Garrafas de vidro reutilizáveis
-            },
-            {
-                question: "O que é uma 'praça de reciclagem'?",
-                answers: ["Um lugar para jogar lixo comum", "Um local para reciclar materiais", "Um parque"],
-                correct: 1 // Resposta correta: Um local para reciclar materiais
-            },
-            {
-                question: "O que ajuda o meio ambiente?",
-                answers: ["Usar canudos plásticos", "Comprar produtos com menos embalagem", "Usar mais plástico"],
-                correct: 1 // Resposta correta: Comprar produtos com menos embalagem
-            }
-        ];
+       const questions = [
+    {
+        question: "O que é sociologia?",
+        answers: ["O estudo da biologia humana", "O estudo das sociedades e suas interações", "O estudo da psicologia individual", "O estudo da economia global"],
+        correct: 1 // Resposta correta: O estudo das sociedades e suas interações
+    },
+    {
+        question: "Quem é considerado o pai da sociologia?",
+        answers: ["Karl Marx", "Emile Durkheim", "Auguste Comte", "Max Weber"],
+        correct: 2 // Resposta correta: Auguste Comte
+    },
+    {
+        question: "O que é estratificação social?",
+        answers: ["A organização da sociedade em classes sociais", "O estudo das interações humanas", "A análise dos comportamentos individuais", "O processo de globalização"],
+        correct: 0 // Resposta correta: A organização da sociedade em classes sociais
+    },
+    {
+        question: "O que é mobilidade social?",
+        answers: ["A mudança de hábitos culturais", "A capacidade de mudar de posição social", "A interação entre grupos sociais", "A formação de comunidades"],
+        correct: 1 // Resposta correta: A capacidade de mudar de posição social
+    },
+    {
+        question: "Qual a importância da pesquisa sociológica?",
+        answers: ["Para entender a história da arte", "Para informar políticas públicas e promover mudanças sociais", "Para estudar a evolução das espécies", "Para analisar a literatura clássica"],
+        correct: 1 // Resposta correta: Para informar políticas públicas e promover mudanças sociais
+    }
+];
+
 
         backgroundImage.onload = function() {
             document.getElementById('startBtn').style.display = 'block';
