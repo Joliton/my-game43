@@ -171,6 +171,29 @@
     }
 ];
 
+        let jumpCount = 0; // Contador de pulos
+
+function jump() {
+    if (jumpCount < 2) { // Permite até 2 pulos
+        tiger.isJumping = true;
+        tiger.jumpVelocity = -25; // Ajuste a velocidade do pulo conforme necessário
+        jumpCount++; // Incrementa o contador de pulos
+    }
+}
+
+function updateTiger() {
+    if (tiger.isJumping) {
+        tiger.y += tiger.jumpVelocity;
+        tiger.jumpVelocity += tiger.gravity;
+
+        if (tiger.y >= 300) { // Aterrissa
+            tiger.y = 300;
+            tiger.isJumping = false;
+            jumpCount = 0; // Reseta o contador de pulos ao aterrissar
+        }
+    }
+}
+
 
         backgroundImage.onload = function() {
             document.getElementById('startBtn').style.display = 'block';
