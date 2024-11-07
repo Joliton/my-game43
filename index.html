@@ -136,60 +136,40 @@
         trashImage.src = 'https://www.pinclipart.com/picdir/big/559-5599148_about-desenho-de-lata-lixo-clipart.png';
 
         const tigerImage = new Image();
-        tigerImage.src = 'https://th.bing.com/th/id/OIP.dHHbtcAfCNgMVUgS7hNdCwHaHu?rs=1&pid=ImgDetMain'; // Nova imagem do tigre
+        tigerImage.src = 'https://th.bing.com/th/id/OIP.dHHbtcAfCNgMVUgS7hNdCwHaHu?rs=1&pid=ImgDetMain';
 
-        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5 };
+        let tiger = { x: 50, y: 300, width: 50, height: 50, hp: 3, points: 0, isJumping: false, jumpVelocity: 0, gravity: 1.5, jumpCount: 0 };
         let trash = [];
         let gameInterval;
         let gameTime = 0;
 
-       const questions = [
-    {
-        question: "O que é sociologia?",
-        answers: ["O estudo da biologia humana", "O estudo das sociedades e suas interações", "O estudo da psicologia individual", "O estudo da economia global"],
-        correct: 1 // Resposta correta: O estudo das sociedades e suas interações
-    },
-    {
-        question: "Quem é considerado o pai da sociologia?",
-        answers: ["Karl Marx", "Emile Durkheim", "Auguste Comte", "Max Weber"],
-        correct: 2 // Resposta correta: Auguste Comte
-    },
-    {
-        question: "O que é estratificação social?",
-        answers: ["A organização da sociedade em classes sociais", "O estudo das interações humanas", "A análise dos comportamentos individuais", "O processo de globalização"],
-        correct: 0 // Resposta correta: A organização da sociedade em classes sociais
-    },
-    {
-        question: "O que é mobilidade social?",
-        answers: ["A mudança de hábitos culturais", "A capacidade de mudar de posição social", "A interação entre grupos sociais", "A formação de comunidades"],
-        correct: 1 // Resposta correta: A capacidade de mudar de posição social
-    },
-    {
-        question: "Qual a importância da pesquisa sociológica?",
-        answers: ["Para entender a história da arte", "Para informar políticas públicas e promover mudanças sociais", "Para estudar a evolução das espécies", "Para analisar a literatura clássica"],
-        correct: 1 // Resposta correta: Para informar políticas públicas e promover mudanças sociais
-    }
-];
-
-        let jumpCount = 0; // Contador de pulos
-
-function jump() {
-    if (jumpCount < 2) { // Permite até 2 pulos
-        tiger.isJumping = true;
-        tiger.jumpVelocity = -25; // Ajuste a velocidade do pulo conforme necessário
-        jumpCount++; // Incrementa o contador de pulos
-    }
-}
-
-// Chamada da função de pulo
-document.getElementById('jumpBtn').onclick = jump;
-
-document.addEventListener('keydown', function(event) {
-    if (event.key === ' ' && !tiger.isJumping) {
-        jump();
-    }
-});
-
+        const questions = [
+            {
+                question: "O que é sociologia?",
+                answers: ["O estudo da biologia humana", "O estudo das sociedades e suas interações", "O estudo da psicologia individual", "O estudo da economia global"],
+                correct: 1
+            },
+            {
+                question: "Quem é considerado o pai da sociologia?",
+                answers: ["Karl Marx", "Emile Durkheim", "Auguste Comte", "Max Weber"],
+                correct: 2
+            },
+            {
+                question: "O que é estratificação social?",
+                answers: ["A organização da sociedade em classes sociais", "O estudo das interações humanas", "A análise dos comportamentos individuais", "O processo de globalização"],
+                correct: 0
+            },
+            {
+                question: "O que é mobilidade social?",
+                answers: ["A mudança de hábitos culturais", "A capacidade de mudar de posição social", "A interação entre grupos sociais", "A formação de comunidades"],
+                correct: 1
+            },
+            {
+                question: "Qual a importância da pesquisa sociológica?",
+                answers: ["Para entender a história da arte", "Para informar políticas públicas e promover mudanças sociais", "Para estudar a evolução das espécies", "Para analisar a literatura clássica"],
+                correct: 1
+            }
+        ];
 
         backgroundImage.onload = function() {
             document.getElementById('startBtn').style.display = 'block';
@@ -208,16 +188,17 @@ document.addEventListener('keydown', function(event) {
         });
 
         function startGame() {
-            tiger.hp = 3; // Alterado para 3
+            tiger.hp = 3;
             tiger.points = 0;
+            tiger.jumpCount = 0; // Resetar contagem de pulos
             trash = [];
             gameTime = 0;
             document.getElementById('startBtn').style.display = 'none';
-            document.getElementById('victoryMessage').style.display = 'none'; // Esconde a mensagem de vitória
+            document.getElementById('victoryMessage').style.display = 'none';
             gameInterval = setInterval(updateGame, 20);
             setInterval(() => {
                 gameTime++;
-                if (gameTime >= 120) { // Termina o jogo após 120 segundos
+                if (gameTime >= 120) {
                     endGame(true);
                 }
             }, 1000);
@@ -234,7 +215,7 @@ document.addEventListener('keydown', function(event) {
         }
 
         function control(event) {
-            if (event.key === ' ' && !tiger.isJumping) {
+            if (event.key === ' ' && tiger.jumpCount < 2) { // Permitir até 2 pulos
                 jump();
             }
             if (event.key === 'a') {
@@ -243,9 +224,10 @@ document.addEventListener('keydown', function(event) {
         }
 
         function jump() {
-            if (!tiger.isJumping) {
+            if (tiger.jumpCount < 2) { // Permitir até 2 pulos
                 tiger.isJumping = true;
                 tiger.jumpVelocity = -25;
+                tiger.jumpCount++; // Aumentar contagem de pulos
             }
         }
 
@@ -287,14 +269,15 @@ document.addEventListener('keydown', function(event) {
                 if (tiger.y >= 300) {
                     tiger.y = 300;
                     tiger.isJumping = false;
+                    tiger.jumpCount = 0; // Resetar contagem de pulos ao voltar ao chão
                 }
             }
         }
 
         function drawTiger() {
-            const tigerWidth = 60; // Ajuste a largura conforme necessário
-            const tigerHeight = 60; // Ajuste a altura conforme necessário
-            ctx.drawImage(tigerImage, tiger.x, tiger.y, tigerWidth, tigerHeight); // Usa a nova imagem do tigre
+            const tigerWidth = 60;
+            const tigerHeight = 60;
+            ctx.drawImage(tigerImage, tiger.x, tiger.y, tigerWidth, tigerHeight);
         }
 
         function drawTrash() {
@@ -333,7 +316,7 @@ document.addEventListener('keydown', function(event) {
         function endGame(won) {
             clearInterval(gameInterval);
             if (won) {
-                document.getElementById('victoryMessage').innerText = "Parabéns! Você ganhou!! 🥳🥳"; // Mensagem de vitória alterada
+                document.getElementById('victoryMessage').innerText = "Parabéns! Você ganhou!! 🥳🥳";
                 document.getElementById('victoryMessage').style.display = 'block';
             } else {
                 showQuestion();
@@ -360,7 +343,7 @@ document.addEventListener('keydown', function(event) {
             } else {
                 alert("Incorreto! Tente novamente na próxima vez.");
             }
-            document.getElementById('questionModal').style.display = 'none'; // Fecha o modal
+            document.getElementById('questionModal').style.display = 'none';
         }
     </script>
 </body>
