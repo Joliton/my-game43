@@ -15,7 +15,6 @@
             height: 100vh;
         }
         canvas {
-            background: black; /* Fundo preto */
             border: 2px solid #fff;
         }
         .button {
@@ -44,7 +43,14 @@
         const startButton = document.getElementById('startButton');
         const restartButton = document.getElementById('restartButton');
 
-        let bird = { x: 50, y: 150, width: 20, height: 20, gravity: 0.3, lift: -6, velocity: 0 };
+        // Carregar as imagens
+        const backgroundImage = new Image();
+        backgroundImage.src = 'https://i.pinimg.com/736x/72/5e/5d/725e5dc00ba49c240cd489e7b87e0496.jpg';
+
+        const birdImage = new Image();
+        birdImage.src = 'https://w7.pngwing.com/pngs/7/560/png-transparent-flappy-bird-new-game-activated-classroom-teaching-a-pedagogy-for-the-digital-age-bird-game-angle-animals.png';
+
+        let bird = { x: 50, y: 150, width: 34, height: 24, gravity: 0.3, lift: -6, velocity: 0 };
         let pipes = [];
         let frame = 0;
         let score = 0;
@@ -53,8 +59,7 @@
         const PIPE_SPEED = 2; // Velocidade dos canos
 
         function drawBird() {
-            ctx.fillStyle = '#ffff99'; // Amarelo claro
-            ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+            ctx.drawImage(birdImage, bird.x, bird.y, bird.width, bird.height);
         }
 
         function drawPipes() {
@@ -128,6 +133,7 @@
             bird.y += bird.velocity;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height); // Desenha o fundo
             drawBird();
             drawPipes();
             drawScore();
