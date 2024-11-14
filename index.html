@@ -123,6 +123,16 @@
             border-radius: 10px;
             margin-top: 10px;
         }
+        #fullscreenBtn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -149,13 +159,16 @@
         <p>Além disso, a exposição prolongada a agrotóxicos está associada a diversos problemas de saúde, incluindo doenças respiratórias e câncer. É fundamental buscar alternativas sustentáveis e promover práticas agrícolas que minimizem o uso de substâncias químicas nocivas.</p>
         
         <!-- Primeira imagem -->
-        <img id="infoImage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoq9ydILO4xEva1Up3BIySYI-zufiP8Tk0EA&s" alt="Contaminação do Solo por Agrotóxicos">
+        <img id="infoImage" src="https://www.exemplo.com/imagem-agrotoxicos.jpg" alt="Contaminação do Solo por Agrotóxicos">
         
         <!-- Segunda imagem -->
-        <img class="extraImage" src="https://static.wixstatic.com/media/c0b5f2_ce0f9a66bd7a4ce7b73dbdb71e5c3bab~mv2.jpg/v1/fill/w_768,h_1920,al_c,q_85,enc_auto/c0b5f2_ce0f9a66bd7a4ce7b73dbdb71e5c3bab~mv2.jpg" alt="Efeitos dos Agrotóxicos">
+        <img class="extraImage" src="https://www.exemplo.com/imagem-efitos.jpg" alt="Efeitos dos Agrotóxicos">
         
         <!-- Terceira imagem -->
-        <img class="extraImage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEgjiRxpHi0qm0E3RFx2JkANT2QX_PTIXV4g&s" alt="Alternativas Sustentáveis">
+        <img class="extraImage" src="https://www.exemplo.com/imagem-alternativas.jpg" alt="Alternativas Sustentáveis">
+        
+        <!-- Botão de tela cheia -->
+        <button id="fullscreenBtn">Tela Cheia</button>
     </div>
 
     <script>
@@ -219,6 +232,8 @@
                 jump();
             }
         });
+
+        document.getElementById('fullscreenBtn').onclick = toggleFullScreen;
 
         function startGame() {
             tiger.hp = 3;
@@ -377,6 +392,17 @@
                 alert("Incorreto! Tente novamente na próxima vez.");
             }
             document.getElementById('questionModal').style.display = 'none';
+        }
+
+        function toggleFullScreen() {
+            const infoSection = document.getElementById('infoSection');
+            if (!document.fullscreenElement) {
+                infoSection.requestFullscreen().catch(err => {
+                    alert(`Erro ao tentar entrar em tela cheia: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
         }
     </script>
 </body>
