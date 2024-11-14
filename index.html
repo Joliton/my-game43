@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo ambiental</title>
+    <title>Jogo Ambiental</title>
     <style>
         body {
             margin: 0;
@@ -106,6 +106,23 @@
             color: white;
             margin: 5px;
         }
+        #infoSection {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #fff;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            text-align: justify;
+            overflow-y: auto; /* Permitir rolagem vertical */
+            max-height: 200px; /* Altura máxima para a rolagem */
+        }
+        #infoImage {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -124,7 +141,15 @@
         <button class="answerBtn" onclick="checkAnswer(1)"></button>
         <button class="answerBtn" onclick="checkAnswer(2)"></button>
     </div>
-    
+
+    <div id="infoSection">
+        <h2>Contaminação do Solo por Agrotóxicos</h2>
+        <p>A contaminação do solo por agrotóxicos é um problema ambiental crescente que afeta a saúde dos ecossistemas e das pessoas. O uso excessivo de pesticidas na agricultura pode levar ao acúmulo de substâncias tóxicas no solo, comprometendo a qualidade da água e a biodiversidade local.</p>
+        <p>Esses produtos químicos não só afetam os organismos do solo, como também podem ser transportados por meio da água da chuva e irrigação, contaminando fontes de água e prejudicando a fauna e flora.</p>
+        <p>Além disso, a exposição prolongada a agrotóxicos está associada a diversos problemas de saúde, incluindo doenças respiratórias e câncer. É fundamental buscar alternativas sustentáveis e promover práticas agrícolas que minimizem o uso de substâncias químicas nocivas.</p>
+        <img id="infoImage" src="https://www.exemplo.com/imagem-agrotoxicos.jpg" alt="Contaminação do Solo por Agrotóxicos">
+    </div>
+
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
