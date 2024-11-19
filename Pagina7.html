@@ -8,24 +8,21 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #000; /* Fundo preto */
+            padding: 0; /* Remover padding do body */
             color: #fff; /* Texto branco */
             position: relative; /* Para posicionar as animações */
+            overflow: auto; /* Permitir rolagem se necessário */
         }
         h1 {
             text-align: center;
-            color: #fff; /* Branco para o título principal */
             font-size: 3em; /* Tamanho do título principal */
             animation: fadeIn 1s; /* Animação de fade-in */
         }
         h2 {
-            color: #fff; /* Branco para os subtítulos */
             font-size: 2.5em; /* Tamanho dos subtítulos */
             animation: slideIn 1s; /* Animação de deslizamento */
         }
-        p {
-            color: #fff; /* Branco para o texto */
+        p, li {
             font-size: 1.5em; /* Tamanho do texto */
             animation: fadeIn 1.5s; /* Animação de fade-in */
         }
@@ -33,18 +30,12 @@
             list-style-type: none;
             padding: 0;
         }
-        li {
-            margin: 10px 0;
-            font-size: 1.5em; /* Tamanho dos itens da lista */
-            animation: fadeIn 2s; /* Animação de fade-in */
-        }
         .image-placeholder {
             width: 100%;
             height: 200px;
-            background-color: #444; /* Cor de fundo das imagens */
+            background-color: rgba(255, 255, 255, 0.1); /* Cor de fundo das imagens */
             text-align: center;
             line-height: 200px;
-            color: #fff; /* Cor do texto na imagem */
             margin: 20px 0;
             transition: transform 0.3s; /* Transição suave */
         }
@@ -112,6 +103,7 @@
             border-radius: 50%;
             animation: explosionAnimation 0.6s forwards; /* Aumentando a duração da animação */
             opacity: 0;
+            z-index: 0; /* Para ficar atrás do conteúdo */
         }
 
         @keyframes explosionAnimation {
@@ -132,21 +124,22 @@
         /* Estilo do vídeo de fogo */
         .fire {
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
-            width: 100%;
-            height: 200px; /* Altura do fogo */
+            width: 100vw; /* Largura total da tela */
+            height: 100vh; /* Altura total da tela */
             overflow: hidden; /* Para esconder partes do vídeo que saem do contêiner */
             z-index: 0; /* Para ficar atrás do conteúdo */
         }
 
         .fire video {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover; /* Para cobrir toda a área */
             position: absolute;
-            bottom: 0; /* Para manter o vídeo na parte inferior */
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%); /* Centraliza o vídeo */
+            transform: translate(-50%, -50%); /* Centraliza o vídeo */
         }
     </style>
 </head>
@@ -199,16 +192,29 @@
         <h2>Conclusão</h2>
         <p>A Segunda Guerra Mundial teve um impacto profundo na história do século XX e continua a influenciar o mundo contemporâneo. As lições aprendidas com este conflito são vitais para a promoção da paz e da segurança global. É fundamental lembrar e estudar esses eventos para evitar que tragédias semelhantes se repitam no futuro.</p>
         
-        <!-- Adicionando fumaça e explosões -->
+        <!-- Adicionando explosões em loop -->
+        <script>
+            function createExplosion() {
+                const explosion = document.createElement('div');
+                explosion.className = 'explosion';
+                explosion.style.left = Math.random() * 100 + 'vw'; // Posição horizontal aleatória
+                explosion.style.top = Math.random() * 100 + 'vh'; // Posição vertical aleatória
+                document.body.appendChild(explosion);
+
+                // Remover a explosão após a animação
+                setTimeout(() => {
+                    explosion.remove();
+                }, 600); // Tempo da animação
+            }
+
+            setInterval(createExplosion, 500); // Criar uma explosão a cada 500ms
+        </script>
+        
+        <!-- Adicionando fumaça -->
         <div class="smoke" style="top: 20px; left: 10%; animation-delay: 0s;"></div>
         <div class="smoke" style="top: 20px; right: 10%; animation-delay: 1s;"></div>
         <div class="smoke" style="top: 20px; left: 40%; animation-delay: 2s;"></div>
         <div class="smoke" style="top: 60px; left: 30%; animation-delay: 0.5s;"></div>
-        
-        <div class="explosion" style="top: 60px; left: 5%; animation-delay: 0s;"></div>
-        <div class="explosion" style="top: 60px; right: 5%; animation-delay: 0.2s;"></div>
-        <div class="explosion" style="top: 60px; left: 45%; animation-delay: 0.4s;"></div>
-        <div class="explosion" style="top: 80px; left: 20%; animation-delay: 0.6s;"></div>
     </div>
 </body>
 </html>
