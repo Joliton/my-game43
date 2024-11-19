@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos de Materiais Descartáveis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cor-fundo: #e8f5e9;
+            --cor-texto: #333;
+            --cor-header: linear-gradient(135deg, #4CAF50, #66BB6A);
+            --cor-link: white;
+            --cor-hover: #FFEB3B;
+            --cor-secao-bg: rgba(56, 142, 60, 0.1);
+            --cor-secao-border: #388E3C;
+            --cor-footer: white;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 1.2em;
+        }
+        header {
+            background: var(--cor-header);
+            color: var(--cor-footer);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        nav a {
+            color: var(--cor-link);
+            margin: 10px 0;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--cor-hover);
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .project {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        .project h2 {
+            color: var(--cor-secao-border);
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .project img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+        .project img:hover {
+            transform: scale(1.05);
+        }
+        .section {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px dashed var(--cor-secao-border);
+            background-color: var(--cor-secao-bg);
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: var(--cor-header);
+            color: var(--cor-footer);
+            width: 100%;
+            font-size: 1.2em;
+        }
+        body.dark-mode {
+            background-color: #333;
+            color: #f5f5f5;
+        }
+        .project.dark-mode {
+            background-color: #1B5E20;
+            color: white;
+        }
+        .section.dark-mode {
+            border-color: #777;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        button {
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: var(--cor-hover);
+            color: var(--cor-texto);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #FFD600;
+            transform: scale(1.05);
+        }
+        body.dark-mode #aboutButton {
+            color: #006400;
+        }
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid var(--cor-secao-border);
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80%; /* Limita a altura do modal */
+    overflow-y: auto; /* Adiciona rolagem vertical */
+    display: flex; /* Usado para centralizar */
+    flex-direction: column; /* Organiza o texto em coluna */
+    align-items: center; /* Centraliza horizontalmente */
+    text-align: center; /* Centraliza o texto */
+}
+
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-content {
+            color: black;
+        }
+        .modal-content a {
+            color: orange;
+        }
+
+        /* Estilo responsivo */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            .project {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Projetos Criativos e Sustentáveis: Transformando Materiais Descartáveis em Inovações</h1>
+    <button id="toggleTheme">Mudar para Modo Escuro</button>
+    <nav>
+        <a href="https://joliton.github.io/my-game43/">Início</a>
+        <a href="https://wa.me/+5513988511295">Contato del Fundador</a>
+        <button id="aboutButton">Sobre</button>
+    </nav>
+</header>
+
+<div class="container">
+    <!-- Bloco de projeto -->
+    <div class="project">
+        <h2>Decorating My Home</h2>
+        <p><strong>Grupo:</strong> Maria Eduarda (líder), Emily Farias, Anny Caroline, Silmara</p>
+        <p><strong>Classe:</strong> 2 ano A</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>Nosso projeto visa criar organizadores de maquiagem e sousplats de forma criativa e personalizada, utilizando materiais recicláveis. A ideia é transformar itens que iriam para o lixo em peças úteis e decorativas para o lar. Cada membro do grupo contribuirá com suas habilidades e ideias, garantindo que os produtos finais reflitam nossa identidade e estilo.</p></div>
+        <div class="section"><h3>Intenções:</h3><p>Queremos decorar nossos lares de maneira única, promovendo a criatividade e a individualidade de cada um. Através da personalização, buscamos tornar os espaços mais acolhedores e expressivos.</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>Além de embelezar os ambientes, nosso projeto tem como objetivo conscientizar sobre a importância da sustentabilidade. Ao prevenir o descarte inadequado de materiais, buscamos reduzir a poluição ambiental e incentivar práticas de reciclagem. Assim, unimos estética e responsabilidade ambiental, mostrando que é possível criar com consciência.</p></div>
+
+        <div class="image-container">
+            <img src="imagens/IMG-20241028-WA0004.jpg" alt="Imagem do Projeto Decorating my home" loading="lazy">
+            <img src="imagens/IMG-20241028-WA0005.jpg" alt="Imagem do Projeto Decorating my home" loading="lazy">
+            <img src="imagens/IMG-20241028-WA0006.jpg" alt="Imagem do Projeto Decorating my home" loading="lazy">
+            <img src="imagens/IMG-20241028-WA0007.jpg" alt="Imagem do Projeto Decorating my home" loading="lazy">
+            <img src="imagens/IMG-20241028-WA0008.jpg" alt="Imagem do Projeto Decorating my home" loading="lazy">
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>Academia Caseira</h2>
+        <p><strong>Grupo:</strong>, Daivyd, Kaio, Rhuan, Luciano, Cauã.</p>
+        <p><strong>Classe:</strong>2º A</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>O projeto consiste em reutilizar garrafas PET preenchidas com areia para criar pesos e usar cabos de vassoura como barras de exercícios. A proposta visa promover a atividade física de forma acessível e sustentável.</p></div>
+        <div class="section"><h3>Intenções:</h3><p>Buscamos diminuir a obesidade e aumentar a saúde da comunidade, oferecendo uma alternativa gratuita para aqueles que não podem pagar uma academia.</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>Queremos incentivar a prática de exercícios físicos sem custos, promover a reciclagem e a sustentabilidade, e criar um espaço comunitário que fortaleça os laços sociais e a saúde coletiva.</p></div>
+
+        <div class="image-container">
+            <img src="imagem2a.jpg" alt="Imagem do Projeto 2" loading="lazy">
+            <img src="imagem2b.jpg" alt="Imagem do Projeto 2" loading="lazy">
+            <img src="imagem2c.jpg" alt="Imagem do Projeto 2" loading="lazy">
+            <img src="imagem2d.jpg" alt="Imagem do Projeto 2" loading="lazy">
+            <img src="imagem2e.jpg" alt="Imagem do Projeto 2" loading="lazy">
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>Incentivo Ambiental</h2>
+        <p><strong>Grupo:</strong> Kayque de Oliveira Souza (líder), Kelly Lima da Cruz, Tawan da Silva Santos</p>
+        <p><strong>Classe:</strong> 2 ano A</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>O projeto "Incentivo Ambiental" visa a criação de vasos de planta de forma prática e acessível, utilizando garrafas PET e outros materiais recicláveis. Através de oficinas e tutoriais, buscamos ensinar as técnicas necessárias para transformar esses materiais em vasos funcionais, promovendo a reutilização e a sustentabilidade. Este projeto não só proporciona uma solução criativa para o descarte de plástico, mas também incentiva o cultivo de plantas em casa, contribuindo para um ambiente mais verde e saudável.</p></div>
+        <div class="section"><h3>Intenções:</h3><p>As intenções do projeto são múltiplas e significativas. Primeiramente, queremos incentivar as pessoas a se envolverem no cultivo de plantas, mostrando que é uma atividade fácil e prática que pode ser realizada em qualquer lar. Além disso, buscamos desmistificar a ideia de que é necessário ter muito espaço ou recursos para cultivar plantas, destacando que até mesmo pequenos espaços podem ser aproveitados. Por fim, pretendemos criar uma comunidade engajada em práticas sustentáveis, onde todos possam compartilhar suas experiências e resultados, promovendo um ciclo de aprendizado e conscientização ambiental.</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>A finalidade do projeto "Incentivo Ambiental" é promover a conscientização sobre a importância da reciclagem e do cultivo de plantas em casa, contribuindo para a preservação do meio ambiente. Ao ensinar a reutilizar garrafas PET e outros materiais recicláveis para criar vasos de planta, buscamos não apenas reduzir o desperdício, mas também incentivar práticas sustentáveis que possam ser facilmente adotadas por qualquer pessoa. Além disso, o projeto visa fomentar o amor pela natureza e a responsabilidade ambiental, mostrando que pequenas ações podem ter um grande impacto.</p></div>
+
+        <div class="image-container">
+            <img src="imagens/projeto Kaique 1.jpg" alt="Imagem do Projeto 3" loading="lazy">
+            <img src="imagens/projeto Kaique 2.jpg" alt="Imagem do Projeto 3" loading="lazy">
+            <img src="imagens/Kaique projeto 3.jpg" alt="Imagem do Projeto 3" loading="lazy">
+            <img src="imagens/kaique projeto 4.jpg" alt="Imagem do Projeto 3" loading="lazy">
+            <img src="imagens/Kaique projeto 5.jpg" alt="Imagem do Projeto 3" loading="lazy">
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>ECODRESS</h2>
+        <p><strong>Grupo:</strong> Isabela Mendes (líder), Giovanna daniely, Steffany Nathalia, Gabriela marchi, Thiago Miranda e Yuri Paulino.</p>
+        <p><strong>Classe:</strong>2º A</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Intenções:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>______________________________________________________________</p></div>
+
+        <div class="image-container">
+            <img src="imagem4a.jpg" alt="Imagem do Projeto 4" loading="lazy">
+            <img src="imagem4b.jpg" alt="Imagem do Projeto 4" loading="lazy">
+            <img src="imagem4c.jpg" alt="Imagem do Projeto 4" loading="lazy">
+            <img src="imagem4d.jpg" alt="Imagem do Projeto 4" loading="lazy">
+            <img src="imagem4e.jpg" alt="Imagem do Projeto 4" loading="lazy">
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>ECOSTELY</h2>
+        <p><strong>Grupo:</strong> Gabriela Cobo(Líder), Yasmin Romeiro, Mirela Oliveira, Evelyn Vitória, Júlia Cardoso, Michele Albino.</p>
+        <p><strong>Classe:</strong>2 ano A</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Intenções:</h3><p>______________________________________________________________</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>______________________________________________________________</p></div>
+
+        <div class="image-container">
+            <img src="imagem5a.jpg" alt="Imagem do Projeto 5" loading="lazy">
+            <img src="imagem5b.jpg" alt="Imagem do Projeto 5" loading="lazy">
+            <img src="imagem5c.jpg" alt="Imagem do Projeto 5" loading="lazy">
+            <img src="imagem5d.jpg" alt="Imagem do Projeto 5" loading="lazy">
+            <img src="imagem5e.jpg" alt="Imagem do Projeto 5" loading="lazy">
+        </div>
+    </div>
+
+<!-- Modal -->
+<div id="aboutModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Sobre</h2>
+        <p class="highlight">Este site nasceu do meu desejo sincero de compartilhar e celebrar a criatividade dos alunos através dos projetos que eles desenvolveram. Cada um desses trabalhos é uma expressão única de esforço e dedicação, mesmo em momentos em que a motivação parece se esvair e os desafios se acumulam como um peso insuportável.</p>
+        <p>Criar este espaço tem sido um alívio, mas também uma fonte de confusão. Às vezes, me pego refletindo sobre o dia que passou e me questionando se realmente vou acordar para enfrentar mais um novo amanhecer. A arte, que deveria ser um refúgio, muitas vezes reflete as batalhas internas que luto diariamente. Sinto como se estivesse lutando contra um passado que se recusa a me deixar em paz, como se demônios invisíveis caminhassem ao meu lado, esperando o momento certo para me derrubar. Quando me perguntam se estou bem, finjo que tudo está sob controle. Mas, na verdade, a tempestade interna parece interminável. Às vezes, me pergunto se alguém realmente se importa, enquanto me sinto preso em um ciclo de solidão, mesmo cercado por amigos. Essa sensação de vazio se torna tão familiar que parece uma companhia constante, como se a solidão tivesse se tornado minha amiga. Os projetos apresentados aqui são dos alunos, que, apesar de suas próprias lutas, se mostram radiantes ao compartilhar suas criações. Cada uma dessas obras é uma busca por significado em meio às dificuldades, um reflexo de que, mesmo quando tudo parece desmoronar, ainda há espaço para a esperança. A arte se transforma em um grito silencioso, uma forma de encontrar paz, mesmo que temporária. Convido você a explorar esses projetos, permitindo-se sentir a luz que eles trazem, mesmo nas horas mais sombrias. A arte é uma expressão de dor, mas também de resiliência, e, juntos, podemos encontrar um fio de esperança em meio à tempestade.</p>
+        <p>Quero também convidá-los a conhecer meu outro projeto: <a href="https://joalison34.github.io/musica-basica-dang/" target="_blank">Mundo Da Música</a>.  Esse site é muito especial para mim e, nos últimos três meses, tenho me dedicado a atualizá-lo frequentemente, buscando trazer novidades e melhorar a experiência de quem visita. Para mim, ele é mais do que um simples site; é um reflexo do meu esforço e crescimento, mesmo quando a inspiração parece distante e o cansaço mental me envolve como uma névoa pesada.</p>
+        <p>Agradeço de coração por fazerem parte dessa jornada, mesmo em meio a dias difíceis. ❤️</p>
+    </div>
+</div>
+
+<script>
+    const toggleThemeButton = document.getElementById('toggleTheme');
+    const aboutButton = document.getElementById('aboutButton');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeModal = document.querySelector('.close');
+    let darkMode = false;
+
+    toggleThemeButton.addEventListener('click', () => {
+        darkMode = !darkMode;
+        document.body.classList.toggle('dark-mode', darkMode);
+        document.querySelectorAll('.project').forEach(project =>
+            project.classList.toggle('dark-mode', darkMode)
+        );
+        toggleThemeButton.textContent = darkMode ? 'Mudar para Modo Claro' : 'Mudar para Modo Escuro';
+    });
+
+    aboutButton.addEventListener('click', () => {
+        aboutModal.style.display = 'flex'; // Exibe o modal
+    });
+
+    closeModal.addEventListener('click', () => {
+        aboutModal.style.display = 'none'; // Oculta o modal
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === aboutModal) {
+            aboutModal.style.display = 'none'; // Oculta o modal ao clicar fora
+        }
+    });
+</script>
+
+
+<footer>
+    <p>&copy; 2024 Projetos de Materiais Descartáveis - Todos os direitos reservados.</p>
+</footer>
+
+<script>
+    const toggleThemeButton = document.getElementById('toggleTheme');
+    const aboutButton = document.getElementById('aboutButton');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeModal = document.querySelector('.close');
+    let darkMode = false;
+
+    toggleThemeButton.addEventListener('click', () => {
+        darkMode = !darkMode;
+        document.body.classList.toggle('dark-mode', darkMode);
+        document.querySelectorAll('.project').forEach(project =>
+            project.classList.toggle('dark-mode', darkMode)
+        );
+        toggleThemeButton.textContent = darkMode ? 'Mudar para Modo Claro' : 'Mudar para Modo Escuro';
+    });
+
+    aboutButton.addEventListener('click', () => {
+        aboutModal.style.display = 'flex'; // Exibe o modal
+    });
+
+    closeModal.addEventListener('click', () => {
+        aboutModal.style.display = 'none'; // Oculta o modal
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === aboutModal) {
+            aboutModal.style.display = 'none'; // Oculta o modal ao clicar fora
+        }
+    });
+</script>
+
+</body>
+    </html>
+    
