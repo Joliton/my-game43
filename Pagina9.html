@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivinhe o Número</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+        input[type="number"] {
+            padding: 10px;
+            width: 80%;
+            margin: 10px 0;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .attempts {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .restart {
+            margin-top: 20px;
+            display: none;
+        }
+        .previous-guesses {
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Adivinhe o Número!</h1>
+        <p>Eu escolhi um número entre 1 e 100. Tente adivinhar!</p>
+        <input type="number" id="guess" min="1" max="100" />
+        <button onclick="checkGuess()">Adivinhar</button>
+        <div class="message" id="message"></div>
+        <div class="attempts" id="attempts"></div>
+        <button class="restart" id="restartBtn" onclick="resetGame()">Reiniciar Jogo</button>
+    </div>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+        let previousGuesses = [];
+        let winningStreak = 0;
+        let totalGames = 0;
+        let totalWins = 0;
+        let highScore = Infinity; // Melhor pontuação
+        let startTime;
+
+        function checkGuess() {
+            const guess = Number(document.getElementById('guess').value);
+            attempts++;
+            previousGuesses.push(guess);
+            const messageElement = document.getElementById('message');
+            const attemptsElement = document.getElementById('attempts');
+            const restartBtn = document.getElementById('restartBtn');
+
+            if (guess < 1 || guess > 100) {
+                messageElement.textContent = "Por favor, escolha um número entre 1 e 100.";
+            } else if (guess < randomNumber) {
+                messageElement.textContent = "Muito baixo! Tente novamente.";
+                displayHints(guess);
+            } else if (guess > randomNumber) {
+                messageElement.textContent = "Muito alto! Tente novamente.";
+                displayHints(guess);
+            } else {
+                messageElement.textContent = `Parabéns! Você adivinhou o número ${randomNumber} em ${attempts} tentativas.`;
+                trackTime();
+                updateGameStats(true);
+                saveHighScore(attempts);
+                playSoundOnWin();
+                attemptsElement.textContent = '';
+                restartBtn.style.display = 'block';
+                displayWinningStreak();
+            }
+
+            attemptsElement.textContent = `Tentativas: ${attempts}`;
+            showPreviousGuesses();
+        }
+
+        function resetGame() {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            previousGuesses = [];
+            document.getElementById('guess').value = '';
+            document.getElementById('message').textContent = '';
+            document.getElementById('attempts').textContent = '';
+            document.getElementById('restartBtn').style.display = 'none';
+            resetWinningStreak();
+        }
+
+        function showPreviousGuesses() {
+            const previousGuessesElement = document.createElement('div');
+            previousGuessesElement.className = 'previous-guesses';
+            previousGuessesElement.textContent = `Palpites anteriores: ${previousGuesses.join(', ')}`;
+            const container = document.querySelector('.container');
+            const existingGuesses = container.querySelector('.previous-guesses');
+            if (existingGuesses) {
+                container.removeChild(existingGuesses);
+            }
+            container.appendChild(previousGuessesElement);
+        }
+
+        function displayWinningStreak() {
+            if (attempts === 1) {
+                winningStreak++;
+                alert(`Você está em uma sequência de vitórias de ${winningStreak}!`);
+            } else {
+                winningStreak = 0;
+            }
+        }
+
+        function resetWinningStreak() {
+            winningStreak = 0;
+        }
+
+        function trackTime() {
+            const endTime = new Date();
+            const timeTaken = Math.round((endTime - startTime) / 1000);
+            alert(`Você levou ${timeTaken} segundos para adivinhar!`);
+        }
+
+        function displayHints(guess) {
+            const difference = Math.abs(randomNumber - guess);
+            if (difference <= 10) {
+                alert('Você está muito perto!');
+            } else if (difference <= 20) {
+                alert('Você está perto!');
+            } else {
+                alert('Você está longe!');
+            }
+        }
+
+        function updateGameStats(isWin) {
+            totalGames++;
+            if (isWin) {
+                totalWins++;
+            }
+            console.log(`Total de jogos: ${totalGames}, Vitórias: ${totalWins}`);
+        }
+
+        function saveHighScore(attempts) {
+            if (attempts < highScore) {
+                highScore = attempts;
+                alert(`Nova melhor pontuação: ${highScore} tentativas!`);
+            }
+        }
+
+        function loadHighScore() {
+            console.log(`Melhor pontuação: ${highScore} tentativas.`);
+        }
+
+        function playSoundOnWin() {
+            const audio = new Audio('path/to/success-sound.mp3'); // Substitua pelo caminho do seu arquivo de som
+            audio.play();
+        }
+
+        function validateInput() {
+            const input = document.getElementById('guess');
+            input.addEventListener('input', () => {
+                if (input.value < 1 || input.value > 100) {
+                    input.value = '';
+                }
+            });
+        }
+
+        function addKeyListener() {
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    checkGuess();
+                }
+            });
+        }
+
+        function logGameStart() {
+            startTime = new Date();
+            console.log('O jogo começou!');
+        }
+
+        // Inicialização
+        validateInput();
+        addKeyListener();
+        logGameStart();
+        loadHighScore(); // Carrega a melhor pontuação ao iniciar
+    </script>
+</body>
+</html>
