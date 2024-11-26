@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos Simples</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            overflow-y: auto; /* Permite rolagem vertical */
+            min-height: 100vh; /* Garante que o corpo ocupe toda a altura da tela */
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+        .game {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            transition: transform 0.3s;
+        }
+        .game:hover {
+            transform: scale(1.05);
+        }
+        input[type="text"], input[type="number"], select {
+            padding: 15px;
+            margin-top: 10px;
+            width: calc(100% - 32px);
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+        button {
+            padding: 15px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        .hidden {
+            display: none;
+        }
+        .hint {
+            font-style: italic;
+            color: #555;
+            margin-top: 10px;
+        }
+        .attempts {
+            margin-top: 10px;
+            color: #007bff;
+        }
+        .correct {
+            color: green;
+            font-weight: bold;
+        }
+        .incorrect {
+            color: red;
+            font-weight: bold;
+        }
+        .timer {
+            font-weight: bold;
+            color: #dc3545;
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+        .start-button {
+            display: block;
+            margin: 20px auto;
+            background-color: #28a745;
+        }
+        .start-button:hover {
+            background-color: #218838;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Jogos Simples</h1>
+
+<div class="game pulse" id="guessGame">
+    <h2>Jogo da Adivinhação</h2>
+    <p>Adivinhe um número entre 1 e 100:</p>
+    <input type="number" id="guessInput" min="1" max="100" placeholder="Digite seu palpite">
+    <button onclick="guessNumber()">Adivinhar</button>
+    <button onclick="restartGuessGame()">Reiniciar Jogo</button>
+    <p id="guessResult"></p>
+    <p class="attempts" id="attemptsHistory"></p>
+</div>
+
+<div class="game pulse" id="hangmanGame">
+    <h2>Jogo da Forca</h2>
+    <p id="hint" class="hint"></p>
+    <p>Palavra: <span id="hangmanWord"></span></p>
+    <p>Tentativas Restantes: <span id="attemptsRemaining"></span></p>
+    <input type="text" id="letterInput" maxlength="1" placeholder="Digite uma letra">
+    <button onclick="guessLetter()">Adivinhar Letra</button>
+    <button onclick="revealWord()">Revelar Palavra</button>
+    <button onclick="restartGame()">Reiniciar Jogo</button>
+    <p id="hangmanResult"></p>
+</div>
+
+<div class="game pulse" id="quizGame">
+    <h2>Jogo de Perguntas</h2>
+    <label for="quizType">Escolha o tipo de perguntas:</label>
+    <select id="quizType">
+        <option value="math">Matemática</option>
+        <option value="curiosity">Curiosidades</option>
+        <option value="mixed">Misto</option>
+    </select>
+    <button class="start-button" id="startQuizButton" onclick="startQuiz()">Iniciar Quiz</button>
+    <p id="quizQuestion" class="hidden"></p>
+    <p class="timer" id="quizTimer" class="hidden"></p>
+    <input type="text" id="quizAnswer" class="hidden" placeholder="Sua resposta...">
+    <button class="hidden" onclick="checkAnswer()">Responder</button>
+    <p id="quizResult" class="hidden"></p>
+    <button class="hidden" id="quizButton" onclick="nextQuestion()">Próxima Pergunta</button>
+    <p id="finalScore" class="hidden"></p>
+</div>
+
+<script>
+    // Jogo da Adivinhação
+    let randomNumber;
+    let attemptsHistory = [];
+
+    function startGuessGame() {
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+        attemptsHistory = [];
+        document.getElementById('guessResult').textContent = '';
+        document.getElementById('attemptsHistory').textContent = '';
+    }
+
+    function guessNumber() {
+        const guess = Number(document.getElementById('guessInput').value);
+        const result = document.getElementById('guessResult');
+        
+        attemptsHistory.push(guess);
+
+        if (guess === randomNumber) {
+            result.textContent = 'Parabéns! Você adivinhou o número!';
+            result.className = 'correct';
+        } else if (guess < randomNumber) {
+            result.textContent = 'Tente um número maior.';
+            result.className = 'incorrect';
+        } else {
+            result.textContent = 'Tente um número menor.';
+            result.className = 'incorrect';
+        }
+
+        document.getElementById('attemptsHistory').textContent = `Tentativas: ${attemptsHistory.join(', ')}`;
+    }
+
+    function restartGuessGame() {
+        startGuessGame();
+        document.getElementById('guessInput').value = '';
+        document.getElementById('attemptsHistory').textContent = '';
+    }
+
+    // Jogo da Forca
+    const words = [
+        { word: 'elefante', hint: 'Animal grande' },
+        { word: 'maçã', hint: 'Fruta vermelha' },
+        { word: 'computador', hint: 'Objeto eletrônico' },
+        { word: 'carro', hint: 'Veículo' }
+    ];
+    let selectedWord;
+    let guessedLetters;
+    let attempts;
+
+    function startGame() {
+        selectedWord = words[Math.floor(Math.random() * words.length)];
+        guessedLetters = [];
+        attempts = 6;
+        document.getElementById('hangmanWord').textContent = '_ '.repeat(selectedWord.word.length);
+        document.getElementById('hint').textContent = `Dica: ${selectedWord.hint}`;
+        document.getElementById('attemptsRemaining').textContent = attempts;
+        document.getElementById('hangmanResult').textContent = '';
+    }
+
+    function guessLetter() {
+        const letter = document.getElementById('letterInput').value.toLowerCase();
+        const result = document.getElementById('hangmanResult');
+
+        if (guessedLetters.includes(letter)) {
+            result.textContent = 'Você já adivinhou essa letra.';
+            return;
+        }
+
+        guessedLetters.push(letter);
+        let displayWord = '';
+        let correctGuess = selectedWord.word.includes(letter);
+
+        if (!correctGuess) {
+            attempts--; // Diminui tentativas apenas se a letra não estiver na palavra
+        }
+
+        for (const char of selectedWord.word) {
+            displayWord += guessedLetters.includes(char) ? char + ' ' : '_ ';
+        }
+
+        document.getElementById('hangmanWord').textContent = displayWord.trim();
+        document.getElementById('attemptsRemaining').textContent = attempts;
+
+        if (!correctGuess) {
+            result.textContent = `Letra "${letter}" não está na palavra.`;
+        }
+
+        if (!displayWord.includes('_')) {
+            result.textContent = 'Parabéns! Você adivinhou a palavra!';
+        } else if (attempts === 0) {
+            result.textContent = `Você perdeu! A palavra era: ${selectedWord.word}`;
+        } else {
+            result.textContent = '';
+        }
+    }
+
+    function revealWord() {
+        document.getElementById('hangmanWord').textContent = selectedWord.word;
+        document.getElementById('hangmanResult').textContent = 'A palavra foi revelada!';
+    }
+
+    function restartGame() {
+        startGame();
+    }
+
+    // Função para capturar a tecla Enter
+    document.getElementById('letterInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            guessLetter();
+        }
+    });
+
+    // Jogo de Perguntas
+    const mathQuestions = [
+        { question: 'Quanto é 2 + 2?', answer: '4' },
+        { question: 'Quanto é 5 - 3?', answer: '2' },
+        { question: 'Quanto é 3 x 3?', answer: '9' }
+    ];
+
+    const curiosityQuestions = [
+        { question: 'Qual é o maior planeta do nosso sistema solar?', answer: 'jupiter' },
+        { question: 'Qual é a capital da França?', answer: 'paris' },
+        { question: 'Quantas cores tem um arco-íris?', answer: 'sete' }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let timer;
+    let timeLeft = 180; // 3 minutos
+
+    function startQuiz() {
+        const quizType = document.getElementById('quizType').value;
+        currentQuestionIndex = 0;
+        score = 0;
+        document.getElementById('finalScore').classList.add('hidden');
+        document.getElementById('startQuizButton').classList.add('hidden');
+        document.getElementById('quizQuestion').classList.remove('hidden');
+        document.getElementById('quizTimer').classList.remove('hidden');
+        document.getElementById('quizAnswer').classList.remove('hidden');
+        document.querySelector('button[onclick="checkAnswer()"]').classList.remove('hidden');
+
+        const questions = quizType === 'math' ? mathQuestions :
+                         quizType === 'curiosity' ? curiosityQuestions :
+                         [...mathQuestions, ...curiosityQuestions];
+
+        nextQuestion(questions);
+    }
+
+    function nextQuestion(questions) {
+        if (currentQuestionIndex < questions.length) {
+            const questionElement = document.getElementById('quizQuestion');
+            const resultElement = document.getElementById('quizResult');
+            const answerElement = document.getElementById('quizAnswer');
+
+            questionElement.textContent = questions[currentQuestionIndex].question;
+            resultElement.textContent = '';
+            answerElement.value = '';
+            timeLeft = 180; // Reinicia o temporizador para 3 minutos
+            startTimer();
+            currentQuestionIndex++;
+        } else {
+            document.getElementById('quizButton').style.display = 'none';
+            document.getElementById('finalScore').textContent = `Pontuação Final: ${score}`;
+            document.getElementById('finalScore').classList.remove('hidden');
+        }
+    }
+
+    function startTimer() {
+        const timerElement = document.getElementById('quizTimer');
+        timerElement.textContent = `Tempo: ${timeLeft} segundos`;
+        clearInterval(timer);
+        timer = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = `Tempo: ${timeLeft} segundos`;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                checkAnswer(); // Responde automaticamente ao acabar o tempo
+            }
+        }, 1000);
+    }
+
+    function checkAnswer() {
+        clearInterval(timer);
+        const answerElement = document.getElementById('quizAnswer');
+        const resultElement = document.getElementById('quizResult');
+        const userAnswer = answerElement.value.toLowerCase();
+
+        const questions = document.getElementById('quizType').value === 'math' ? mathQuestions :
+                          document.getElementById('quizType').value === 'curiosity' ? curiosityQuestions :
+                          [...mathQuestions, ...curiosityQuestions];
+
+        if (userAnswer === questions[currentQuestionIndex - 1].answer) {
+            resultElement.textContent = 'Correto!';
+            score++;
+        } else {
+            resultElement.textContent = `Incorreto! A resposta correta é: ${questions[currentQuestionIndex - 1].answer}`;
+        }
+
+        setTimeout(() => nextQuestion(questions), 2000); // Avança para a próxima pergunta após 2 segundos
+    }
+
+    // Inicia os jogos
+    startGuessGame();
+    startGame();
+</script>
+
+</body>
+</html>
