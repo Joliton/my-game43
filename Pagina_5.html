@@ -52,6 +52,18 @@
             padding: 30px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
+        .search-bar {
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
         .link-card {
             background: rgba(255, 255, 255, 0.2);
             padding: 20px;
@@ -156,29 +168,37 @@
     
     <div class="container">
         <h2 style="text-align: center;">Links Úteis</h2>
-        <div class="link-card">
-            <a href="https://s3.amazonaws.com/0ubz-2q11-gi9y/psiphon3.exe" target="_blank">Psiphon 3</a>
+        
+        <!-- Módulo de Pesquisa -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Pesquisar...">
         </div>
-        <div class="link-card">
-            <a href="https://www.moddb.com/groups/anime-fans-of-moddb/downloads/konata-desktop-dancer">Konata Desktop Dancer</a>
-        </div>
-        <div class="link-card">
-            <a href="https://www.win-rar.com/postdownload.html?&L=0" target="_blank">WinRAR</a>
-         </div>
-        <div class="link-card">
-            <a href="https://cmspweb.ip.tv/"_blank">CMSP</a>
-        </div>
-         <div class="link-card">
-            <a href="https://www.youtube.com/" target="_blank">Youtube</a>
-        </div>
-         <div class="link-card">
-            <a href="https://github.com/" target="_blank">Github</a>
-        </div>
-         <div class="link-card">
-            <a href="https://www.retrogames.cc/" target="_blank">Retro Games</a>
-        </div>
-        <div class="link-card">
-            <a href="https://portaldozacarias.com.br/site/" target="_blank">Portal</a>
+        
+        <div id="linksContainer">
+            <div class="link-card">
+                <a href="https://s3.amazonaws.com/0ubz-2q11-gi9y/psiphon3.exe" target="_blank">Psiphon 3</a>
+            </div>
+            <div class="link-card">
+                <a href="https://www.moddb.com/groups/anime-fans-of-moddb/downloads/konata-desktop-dancer">Konata Desktop Dancer</a>
+            </div>
+            <div class="link-card">
+                <a href="https://www.win-rar.com/postdownload.html?&L=0" target="_blank">WinRAR</a>
+            </div>
+            <div class="link-card">
+                <a href="https://cmspweb.ip.tv/" target="_blank">CMSP</a>
+            </div>
+            <div class="link-card">
+                <a href="https://www.youtube.com/" target="_blank">Youtube</a>
+            </div>
+            <div class="link-card">
+                <a href="https://github.com/" target="_blank">Github</a>
+            </div>
+            <div class="link-card">
+                <a href="https://www.retrogames.cc/" target="_blank">Retro Games</a>
+            </div>
+            <div class="link-card">
+                <a href="https://portaldozacarias.com.br/site/" target="_blank">Portal</a>
+            </div>
         </div>
     </div>
 
@@ -200,6 +220,16 @@
     </div>
 
     <script>
+        // Função para filtrar links com base na pesquisa
+        document.getElementById("searchInput").addEventListener("input", function() {
+            const filter = this.value.toLowerCase();
+            const cards = document.querySelectorAll(".link-card");
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(filter) ? "block" : "none";
+            });
+        });
+
         // Obtém o modal
         var modal = document.getElementById("aboutModal");
 
