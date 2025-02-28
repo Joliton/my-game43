@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos de Materiais Descartáveis 2° ano A </title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cor-fundo: #e8f5e9;
+            --cor-texto: #333;
+            --cor-header: linear-gradient(135deg, #4CAF50, #66BB6A);
+            --cor-link: white;
+            --cor-hover: #FFEB3B;
+            --cor-secao-bg: rgba(56, 142, 60, 0.1);
+            --cor-secao-border: #388E3C;
+            --cor-footer: white;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 1.2em;
+        }
+        header {
+            background: var(--cor-header);
+            color: var(--cor-footer);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        nav a {
+            color: var(--cor-link);
+            margin: 10px 0;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--cor-hover);
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .project {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        .project h2 {
+            color: var(--cor-secao-border);
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .project img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+        .project img:hover {
+            transform: scale(1.05);
+        }
+        .section {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px dashed var(--cor-secao-border);
+            background-color: var(--cor-secao-bg);
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: var(--cor-header);
+            color: var(--cor-footer);
+            width: 100%;
+            font-size: 1.2em;
+        }
+        body.dark-mode {
+            background-color: #333;
+            color: #f5f5f5;
+        }
+        .project.dark-mode {
+            background-color: #1B5E20;
+            color: white;
+        }
+        .section.dark-mode {
+            border-color: #777;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        button {
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: var(--cor-hover);
+            color: var(--cor-texto);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #FFD600;
+            transform: scale(1.05);
+        }
+        body.dark-mode #aboutButton {
+            color: #006400;
+        }
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid var(--cor-secao-border);
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 80%; /* Limita a altura do modal */
+    overflow-y: auto; /* Adiciona rolagem vertical */
+    display: flex; /* Usado para centralizar */
+    flex-direction: column; /* Organiza o texto em coluna */
+    align-items: center; /* Centraliza horizontalmente */
+    text-align: center; /* Centraliza o texto */
+}
+
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-content {
+            color: black;
+        }
+        .modal-content a {
+            color: orange;
+        }
+
+        /* Estilo responsivo */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            .project {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Projetos Criativos e Sustentáveis: Transformando Materiais Descartáveis em Inovações (2° ano A) </h1>
+    <button id="toggleTheme">Mudar para Modo Escuro</button>
+    <nav>
+        <a href="https://joliton.github.io/my-game43/">Início</a>
+        <a href="https://wa.me/+5513988511295">Contato del Fundador</a>
+        <button id="aboutButton">Sobre</button>
+    </nav>
+</header>
+
+<div class="container">
+    <!-- Bloco de projeto -->
+    <div class="project">
+        <h2>----------------</h2>
+        <p><strong>Grupo:</strong> ----------------------</p>
+        <p><strong>Classe:</strong> ---------</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>---------------------------------------</p></div>
+        <div class="section"><h3>Intenções:</h3><p>-----------------------------------------------------------</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>------------------------------------</p></div>
+
+        <div class="image-container">
+            <img src="imagens/IMG-20241028-WA0004.jpg" alt="Imagem do Projeto Decorating my home" />
+            <img src="imagens/IMG-20241028-WA0005.jpg" alt="Imagem do Projeto Decorating my home" />
+            <img src="imagens/IMG-20241028-WA0006.jpg" alt="Imagem do Projeto Decorating my home" />
+            <img src="imagens/IMG-20241028-WA0007.jpg" alt="Imagem do Projeto Decorating my home" />
+            <img src="imagens/IMG-20241028-WA0008.jpg" alt="Imagem do Projeto Decorating my home" />
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>------------------ </h2>
+        <p><strong>Grupo:</strong> --------------------</p>
+        <p><strong>Classe:</strong>-----------------</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>----------------------------------------</p></div>
+        <div class="section"><h3>Intenções:</h3><p>----------------------------------------------------</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>---------------------------------------</p></div>
+
+        <div class="image-container">
+            <img src="imagens/Caseira 1.jpg" alt="Imagem do Projeto 2" />
+            <img src="imagens/Caseira 2.jpg" alt="Imagem do Projeto 2" />
+            <img src="imagens/Caseira 3.jpg" alt="Imagem do Projeto 2" /> 
+            <img src="imagens/Caseira 4.jpg" alt="Imagem do Projeto 2" />
+            <img src="imagens/Caseira 5.jpg" alt="Imagem do Projeto 2" />
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>-------------------</h2>
+        <p><strong>Grupo:</strong> ----------------------------------------------</p>
+        <p><strong>Classe:</strong>----------------</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>-----------------------------------</p></div>
+        <div class="section"><h3>Intenções:</h3><p>-----------------------------------</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>------------------------------------</p></div>
+
+        <div class="image-container">
+            <img src="imagens/projeto Kaique 1.jpg" alt="Imagem do Projeto 3" />
+            <img src="imagens/projeto Kaique 2.jpg" alt="Imagem do Projeto 3" />
+            <img src="imagens/Kaique projeto 3.jpg" alt="Imagem do Projeto 3" />
+            <img src="imagens/kaique projeto 4.jpg" alt="Imagem do Projeto 3" />
+            <img src="imagens/Kaique projeto 5.jpg" alt="Imagem do Projeto 3" />
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>----------</h2>
+        <p><strong>Grupo:</strong>-----------------------------------</p>
+        <p><strong>Classe:</strong>--------------</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>--------------------------------------</p></div>
+        <div class="section"><h3>Intenções:</h3><p>---------------------</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>--------------------------</p></div>
+
+        <div class="image-container">
+            <img src="imagens/Marchi 1 .jpg" alt="Imagem do Projeto 4" />
+            <img src="imagens/Marchi 2.jpg" alt="Imagem do Projeto 4" />
+            <img src="imagens/Marchi 3.jpg" alt="Imagem do Projeto 4" />
+            <img src="imagens/Marchi 4.jpg" alt="Imagem do Projeto 4" />
+            <img src="imagens/Marchi 5.jpg" alt="Imagem do Projeto 4" />
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>------------</h2>
+        <p><strong>Grupo:</strong> --------------------------</p>
+        <p><strong>Classe:</strong>---------</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>-------------------------------</p></div>
+        <div class="section"><h3>Intenções:</h3><p>------------------------------------</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>-------------------------------</p></div>
+
+        <div class="image-container">
+            <img src="imagens/eco 1.jpg" alt="Imagem do Projeto 5" />
+            <img src="imagens/eco 2.jpg" alt="Imagem do Projeto 5" />
+            <img src="imagens/eco 3.jpg" alt="Imagem do Projeto 5" />
+            <img src="imagens/eco 4.jpg" alt="Imagem do Projeto 5" />
+        </div>
+    </div>
+          
+      <div class="project">
+        <h2>-------------</h2>
+        <p><strong>Grupo:</strong> --------------------</p>
+        <p><strong>Classe:</strong>--------------</p>
+        
+        <div class="section"><h3>Resumo do Projeto:</h3><p>--------------------------------------</p></div>
+        <div class="section"><h3>Intenções:</h3><p>------------------------------------</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>------------------------------</p></div>
+
+        <div class="image-container">
+            <img src="imagens/WhatsApp Image 2024-11-22 at 15.47.11 (1).jpeg" alt="Imagem do Projeto 5" />
+            <img src="imagens/WhatsApp Image 2024-11-22 at 15.47.11 (2).jpeg" alt="Imagem do Projeto 5" />
+            <img src="imagens/WhatsApp Image 2024-11-22 at 15.47.11.jpeg" alt="Imagem do Projeto 5" />
+        </div>
+    </div>
+
+    <div class="project">
+        <h2>-----------------------</h2>
+        <p><strong>Grupo:</strong> -------------</p>
+        <p><strong>Classe:</strong>-------------</p>
+        
+        <div class="section"><h3>--------------------------------------------------</p></div>
+        <div class="section"><h3>Intenções:</h3><p>-------------------------------------</p></div>
+        <div class="section"><h3>Finalidades:</h3><p>--------------------------------------</p></div>
+
+        <div class="image-container">
+            <img src="imagens/meu projeto (1)~3.png" alt="Imagem do Projeto 7" />
+            <img src="imagens/imagens my 2.jpg" alt="Imagem do Projeto 7" />
+            <img src="imagens/imagem my 3.jpg" alt="Imagem do Projeto 7" />
+            <img src="imagens/my projeto Img 4.jpg" alt="Imagem do Projeto 7" />
+            <img src="imagens/my projeto Img 5.png" alt="Imagem do Projeto 7" />
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="aboutModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Sobre</h2>
+        <p class="highlight">.</p>
+       <p>Quero também convidá-los a conhecer meu outro projeto: <a href="https://joalison34.github.io/musica-basica-dang/" target="_blank">Mundo Da Música</a>.  Esse site é muito especial para mim e, nos últimos três meses, tenho me dedicado a atualizá-lo frequentemente, buscando trazer novidades e melhorar a experiência de quem visita. Para mim, ele é mais do que um simples site; é um reflexo do meu esforço e crescimento.</p>
+        <p>Agradeço de coração por fazerem parte dessa jornada, mesmo em meio a dias difíceis. ❤️</p>
+    </div>
+</div>
+
+<script>
+    const toggleThemeButton = document.getElementById('toggleTheme');
+    const aboutButton = document.getElementById('aboutButton');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeModal = document.querySelector('.close');
+    let darkMode = false;
+
+    toggleThemeButton.addEventListener('click', () => {
+        darkMode = !darkMode;
+        document.body.classList.toggle('dark-mode', darkMode);
+        document.querySelectorAll('.project').forEach(project =>
+            project.classList.toggle('dark-mode', darkMode)
+        );
+        toggleThemeButton.textContent = darkMode ? 'Mudar para Modo Claro' : 'Mudar para Modo Escuro';
+    });
+
+    aboutButton.addEventListener('click', () => {
+        aboutModal.style.display = 'flex'; // Exibe o modal
+    });
+
+    closeModal.addEventListener('click', () => {
+        aboutModal.style.display = 'none'; // Oculta o modal
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === aboutModal) {
+            aboutModal.style.display = 'none'; // Oculta o modal ao clicar fora
+        }
+    });
+</script>
+
+
+<footer>
+    <p>&copy; 2024 Projetos de Materiais Descartáveis - Todos os direitos reservados.</p>
+</footer>
+
+<script>
+    const toggleThemeButton = document.getElementById('toggleTheme');
+    const aboutButton = document.getElementById('aboutButton');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeModal = document.querySelector('.close');
+    let darkMode = false;
+
+    toggleThemeButton.addEventListener('click', () => {
+        darkMode = !darkMode;
+        document.body.classList.toggle('dark-mode', darkMode);
+        document.querySelectorAll('.project').forEach(project =>
+            project.classList.toggle('dark-mode', darkMode)
+        );
+        toggleThemeButton.textContent = darkMode ? 'Mudar para Modo Claro' : 'Mudar para Modo Escuro';
+    });
+
+    aboutButton.addEventListener('click', () => {
+        aboutModal.style.display = 'flex'; // Exibe o modal
+    });
+
+    closeModal.addEventListener('click', () => {
+        aboutModal.style.display = 'none'; // Oculta o modal
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === aboutModal) {
+            aboutModal.style.display = 'none'; // Oculta o modal ao clicar fora
+        }
+    });
+</script>
+
+</body>
+    </html>
+    
