@@ -1,1 +1,3 @@
-# my-game
+# my-game  
+
+Comentarios estão sendo duplicados, banimentos não estão excluindo contas, aparece que foi banido, mais não funciona corretamente,com usuario banido voltando e moderadores agora podem dar mute em usuarios de qualquer cargo ou para os quem não tem cargo, moderadores podem escolher o tempo de mute baseado em segundos, usuarios mutados não podem mandar mensagens até o mute acabar, quando uma pessoa logar com sua conta no site, normalmente ele ficava deslogando da conta, quando relogava no site, mais agora quero que quando a pessoa logue na sua conta, mesmo quando a pessoa relogue no site, a conta continue logada, mais quando um usuario for banido ela sera excluida, com correções pra esses erros, se um usuario como exemplo se chamar jonny for banido outra pessoa podera criar uma conta comm o nome jonny, porque é como uma exclusão de contas, e outro usuario pode criar com o mesmo nome, mais qando é existente não pode, por enquanto só isso
